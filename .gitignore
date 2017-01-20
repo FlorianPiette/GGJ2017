@@ -5,3 +5,4 @@ GGJ2017/Temp/
 *.csproj
 *.sln
 GGJ2017/obj/
+*.meta
