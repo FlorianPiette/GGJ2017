@@ -2,3 +2,6 @@ GGJ2017/Library/
 GGJ2017/ProjectSettings/GraphicsSettings.asset
 GGJ2017/ProjectSettings/
 GGJ2017/Temp/
+*.csproj
+*.sln
+GGJ2017/obj/
