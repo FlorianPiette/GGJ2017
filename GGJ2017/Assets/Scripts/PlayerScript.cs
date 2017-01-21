@@ -45,7 +45,11 @@ public class PlayerScript : MonoBehaviour
 	[HideInInspector]
 	public Animator animator;
 
-	void Awake()
+    bool isCharging = false;
+    float time;
+
+
+    void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
@@ -113,7 +117,13 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			canDash = true;
 		}
-		if (Input.GetButtonUp(throwInput) && phase != PhaseManager.Phase.Defense)
+        if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense && !isCharging)
+        {
+            time = Time.time;
+            print(time);
+            isCharging = true;
+        }
+        if (Input.GetButtonUp(throwInput) && phase != PhaseManager.Phase.Defense && isCharging)
 		{
 			TimerLoad = 0;
 			attackLoad = false;
@@ -131,13 +141,14 @@ public class PlayerScript : MonoBehaviour
 				balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
             else
                 balle.GetComponent<BallScript>().setDirection(movement);
-            balle.GetComponent<BallScript>().setVitesse(5); //TODO Gestion de vitesse
+            balle.GetComponent<BallScript>().setVitesse((Time.time - time) * 3); //TODO Gestion de vitesse
             Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
 			throwOn = false;
+            isCharging = false;
         }
 
-		if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
+        if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
 		{
 			attackLoad = true;
 			looseMana = 0;
