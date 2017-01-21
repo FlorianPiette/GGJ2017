@@ -65,16 +65,17 @@ public class PlayerScript : MonoBehaviour
 
 		float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
-        rigidbody.velocity = Vector2.zero;
  //       print(moveHorizontal + "," + moveVertical);
 
 		Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-		if(!dashOn && !throwOn && movement != Vector2.zero)
+		if (!dashOn && !chargeOn && !throwOn && movement != Vector2.zero)
 		{
 			rigidbody.velocity = movement * speed;
-			animator.Play(playerName+"_Run");
+			animator.Play(playerName + "_Run");
 		}
+		else
+			rigidbody.velocity = Vector2.zero;
 
         rigidbody.position = new Vector2 
         (
@@ -113,7 +114,7 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			canDash = true;
 		}
-		if (Input.GetButtonUp(throwInput) && phase != PhaseManager.Phase.Defense)
+		if (Input.GetButtonUp(throwInput) && chargeOn && !throwOn)
 		{
 			chargeOn = false;
 			throwOn = true;
