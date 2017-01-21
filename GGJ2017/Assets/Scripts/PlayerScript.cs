@@ -47,7 +47,10 @@ public class PlayerScript : MonoBehaviour
 	[HideInInspector]
 	public Animator animator;
 
-	void Awake()
+    [FMODUnity.EventRef]
+    public string golemActivation = "event:/golemActivation_sfx";
+
+    void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
@@ -57,6 +60,7 @@ public class PlayerScript : MonoBehaviour
 		throwInput = "J" + playerId + "Action";
 		dashInput = "J" + playerId + "Dash";
 		dashDelay = dashDelayMax;
+
     }
 
     void FixedUpdate ()
@@ -144,6 +148,7 @@ public class PlayerScript : MonoBehaviour
             balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier);
             Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
+            ShakeScript.Instance.Shake(ShakeScript.ScreenshakeTypes.Weak); 
 			throwOn = false;
         }
 
@@ -171,5 +176,11 @@ public class PlayerScript : MonoBehaviour
 		if (TimerLoad >= 2f) {
 			looseMana = 10;
 		}
+    }
+
+    void IntroSoundPlayer ()
+    {
+        if (playerId == 1)
+            FMODUnity.RuntimeManager.PlayOneShot(golemActivation, Vector3.zero);
     }
 }

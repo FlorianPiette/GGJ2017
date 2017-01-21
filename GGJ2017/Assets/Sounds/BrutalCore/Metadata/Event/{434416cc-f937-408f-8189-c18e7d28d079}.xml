@@ -5,7 +5,7 @@
             <value>golemActivation_sfx</value>
         </property>
         <property name="outputFormat">
-            <value>2</value>
+            <value>1</value>
         </property>
         <relationship name="mixer">
             <destination>{e8b82d7d-6fad-4468-ae86-67827c8eb265}</destination>
@@ -116,7 +116,6 @@
     <object class="MixerBusEffectChain" id="{6131604c-72fe-4379-bfbb-e8b395fd77b5}">
         <relationship name="effects">
             <destination>{64c384fa-5395-4fcb-b321-b5f2c9577f8a}</destination>
-            <destination>{73ef1fad-3072-4296-82fd-a6c7328472aa}</destination>
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{3f7d30ea-356d-42c5-88c0-d3b51d40073d}"/>
@@ -128,6 +127,5 @@
     </object>
     <object class="MixerBusPanner" id="{26672fff-d83a-4d4d-8e39-0451cb1d325a}"/>
     <object class="MixerBusFader" id="{64c384fa-5395-4fcb-b321-b5f2c9577f8a}"/>
-    <object class="SpatialiserEffect" id="{73ef1fad-3072-4296-82fd-a6c7328472aa}"/>
     <object class="MixerBusFader" id="{621936b8-8ab7-41db-8cb8-9a9862cdf1d8}"/>
 </objects>
