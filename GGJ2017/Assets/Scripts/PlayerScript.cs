@@ -55,6 +55,10 @@ public class PlayerScript : MonoBehaviour
     void FixedUpdate ()
     {
 		_manaCount = manaCount;
+		if(_manaCount == PhaseManager.Instance.manaMaxLimitToSwitch)
+		{
+			PhaseManager.Instance.AttributePhase();
+		}
 
 		float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
@@ -108,7 +112,7 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			canDash = true;
 		}
-		if (Input.GetButtonDown(throwInput))
+		if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
 		{
 			throwOn = true;
             GameObject balle;

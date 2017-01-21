@@ -33,7 +33,7 @@ public class MenuScript : MonoBehaviour {
             PressAToJoinPlayer1.sprite = PlayerOneIsReady ? Ready : PressAToJoin;
         }
 
-        if (Input.GetButtonDown("J1Dash"))
+        if (Input.GetButtonDown("J2Dash"))
         {
             PlayerTwoIsReady = !PlayerTwoIsReady;
             PressAToJoinPlayer2.sprite = PlayerTwoIsReady ? Ready : PressAToJoin;
