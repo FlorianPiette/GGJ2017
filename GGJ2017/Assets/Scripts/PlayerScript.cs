@@ -30,6 +30,8 @@ public class PlayerScript : MonoBehaviour
 	public bool dashOn = false;
 	private float currentDashTime;
 	private string dashInput;
+    [SerializeField]
+    private GameObject ball;
 
 	void Awake()
 	{
@@ -37,7 +39,7 @@ public class PlayerScript : MonoBehaviour
 		currentDashTime = maxDashTime;
 		dashInput = "J" + playerId + "Dash";
 		dashDelay = dashDelayMax;
-	}
+    }
 
     void FixedUpdate ()
     {
@@ -45,6 +47,7 @@ public class PlayerScript : MonoBehaviour
 
         float moveHorizontal = Input.GetAxis ("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
+ //       print(moveHorizontal + "," + moveVertical);
 
         Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
         rigidbody.velocity = movement * speed;
@@ -82,6 +85,20 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			dashOn = false;
 		}
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            GameObject balle;
+
+//print(gameObject.transform.GetChild(0).transform.position);
+            balle = Instantiate(ball);
+            balle.transform.position = gameObject.transform.GetChild(0).transform.position;
+            if (movement.x < 0)
+                balle.GetComponent<BallScript>().setDirection(-movement);
+            else
+                balle.GetComponent<BallScript>().setDirection(movement);
+            balle.GetComponent<BallScript>().setVitesse(2); //TODO Gestion de vitesse
+            Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+        }
     }
 
 	void OnCollisionEnter2D(Collision2D other)
