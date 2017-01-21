@@ -145,21 +145,8 @@ public class PlayerScript : MonoBehaviour
 				multiplier = 2;
             if (TimerLoad < surcharge)
             {
-                GameObject balle;
+                LaunchBullet(movement, multiplier);
 
-                //print(gameObject.transform.GetChild(0).transform.position);
-                balle = Instantiate(ball);
-                balle.transform.position = gameObject.transform.GetChild(0).transform.position;
-                if (movement.x < 0)
-                    balle.GetComponent<BallScript>().setDirection(-movement);
-                else if (movement.x == 0 && movement.y == 0)
-                    balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
-                else
-                    balle.GetComponent<BallScript>().setDirection(movement);
-                balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier);
-                Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-
-                throwOn = false;
             }
 
             TimerLoad = 0;
@@ -221,10 +208,11 @@ public class PlayerScript : MonoBehaviour
 		//print(gameObject.transform.GetChild(0).transform.position);
 		balle = Instantiate(ball);
 		balle.transform.position = gameObject.transform.GetChild(0).transform.position;
-		if (movement.x < 0)
+        print(movement);
+		if ((movement.x < 0 && transform.position.x < 0) ||(movement.x > 0 && transform.position.x > 0))
 			balle.GetComponent<BallScript>().setDirection(-movement);
 		else if (movement.x == 0 && movement.y == 0)
-			balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
+			balle.GetComponent<BallScript>().setDirection((transform.position.x < 0 ? Vector2.right : Vector2.left));
 		else
 			balle.GetComponent<BallScript>().setDirection(movement);
 		balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier * 2);
