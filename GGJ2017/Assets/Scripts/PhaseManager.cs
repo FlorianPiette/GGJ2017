@@ -18,7 +18,9 @@ public class PhaseManager : MonoBehaviour
 	public ManaSpawner[] ManaSpawners;
 	public float manaMaxLimitToSwitch = 100;
 
-	void Awake ()
+    public bool DebugIsOn = false;
+
+    void Awake ()
 	{
 		Instance = this;
 		AttributePhase();
@@ -27,7 +29,7 @@ public class PhaseManager : MonoBehaviour
 	void Update ()
 	{
 		//Debug 
-		if(Input.GetKeyDown(KeyCode.Return))
+		if(Input.GetKeyDown(KeyCode.Return) && DebugIsOn)
 		{
 			AttributePhase();
 		}
