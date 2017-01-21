@@ -10,12 +10,13 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
-	[SerializeField]
-	private float manaCount;
+	private float _manaCount;
+	public float manaCount;
 	[SerializeField]
 	private float speed;
 	[SerializeField]
 	private int playerId;
+	public PhaseManager.Phase phase;
     //public float tilt;
 	[SerializeField]
     private Boundary boundary;
@@ -40,6 +41,8 @@ public class PlayerScript : MonoBehaviour
 
     void FixedUpdate ()
     {
+		_manaCount = manaCount;
+
         float moveHorizontal = Input.GetAxis ("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
 
@@ -81,12 +84,11 @@ public class PlayerScript : MonoBehaviour
 		}
     }
 
-	public void OnTriggerEnter2D(Collider2D other)
+	void OnCollisionEnter2D(Collision2D other)
 	{
-		if(other.tag == "Collectibles")
+		if (other.gameObject.name == "shot")
 		{
-			manaCount = other.GetComponent<CollectiblesScript>().GiveMana(manaCount);
-			other.GetComponent<CollectiblesScript>().Kill();
+			other.gameObject.GetComponent<ShieldScript>().ShieldCollide();
 		}
 	}
 }

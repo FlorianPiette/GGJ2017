@@ -6,16 +6,6 @@ public class CollectiblesScript : MonoBehaviour
 {
 	public float manaPoints = 10.0f;
 
-	void Start ()
-	{
-		
-	}
-	
-	void Update ()
-	{
-		
-	}
-
 	public float GiveMana(float playerMana)
 	{
 		float amountOfMana = playerMana + manaPoints;
@@ -24,6 +14,10 @@ public class CollectiblesScript : MonoBehaviour
 
 	public void Kill()
 	{
-		GameObject.Destroy(this.gameObject);
+		if(transform.parent.GetComponent<ManaSpawner>().enabled)
+		{
+			transform.parent.GetComponent<ManaSpawner>().ReduceObjectSpawned();
+		}
+		Destroy(this.gameObject);
 	}
 }
