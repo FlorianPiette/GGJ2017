@@ -15,7 +15,6 @@ public class PlayerScript : MonoBehaviour
 	public int looseMana;
 
 	private float _manaCount;
-    public float manaMax;
 	public float manaCount;
 	[SerializeField]
 	private float speed;
@@ -55,8 +54,7 @@ public class PlayerScript : MonoBehaviour
 
     public float surcharge;
 
-    public float intervalleRecharge;
-    private float timeBeforeRecharging;
+    private Vector3 startScale;
 
     void Awake()
 	{
@@ -68,8 +66,9 @@ public class PlayerScript : MonoBehaviour
 		throwInput = "J" + playerId + "Action";
 		dashInput = "J" + playerId + "Dash";
 		dashDelay = dashDelayMax;
-        manaCount = manaMax;
-        timeBeforeRecharging = intervalleRecharge;
+
+        startScale = this.transform.localScale;
+
     }
 
     void FixedUpdate ()
@@ -86,7 +85,13 @@ public class PlayerScript : MonoBehaviour
 		{
 			rigidbody.velocity = movement * speed;
 			animator.Play(playerName + "_Run");
-		}
+
+            //Retourner le personnage
+            if (movement.x > 0f)
+                this.GetComponent<SpriteRenderer>().flipX = true;
+            else
+                this.GetComponent<SpriteRenderer>().flipX = false;
+        }
 		else
 			rigidbody.velocity = Vector2.zero;
 
@@ -137,15 +142,26 @@ public class PlayerScript : MonoBehaviour
 				multiplier = 2;
             if (TimerLoad < surcharge)
             {
-                LaunchBullet(movement, multiplier);
-            }
-            else
-            {
-                manaCount -= looseMana;
+                GameObject balle;
+
+                //print(gameObject.transform.GetChild(0).transform.position);
+                balle = Instantiate(ball);
+                balle.transform.position = gameObject.transform.GetChild(0).transform.position;
+                if (movement.x < 0)
+                    balle.GetComponent<BallScript>().setDirection(-movement);
+                else if (movement.x == 0 && movement.y == 0)
+                    balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
+                else
+                    balle.GetComponent<BallScript>().setDirection(movement);
+                balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier);
+                Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+
                 throwOn = false;
-                TimerLoad = 0;
-                attackLoad = false;
             }
+
+            TimerLoad = 0;
+            attackLoad = false;
+            manaCount -= looseMana;
         }
 
         if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense && manaCount >= 2)
@@ -164,60 +180,16 @@ public class PlayerScript : MonoBehaviour
 		if (TimerLoad >= 0.5f && manaCount >= 4) {
 			looseMana = 4;
         }
-        else if (TimerLoad >= 0.5f && manaCount < 4)
-            LaunchBullet(movement, 1);
-        if (TimerLoad >= 1f && manaCount >= 6) {
+		if (TimerLoad >= 1f && manaCount >= 6) {
 			looseMana = 6;
         }
-        else if (TimerLoad >= 1f && manaCount < 6)
-            LaunchBullet(movement, 1);
-        if (TimerLoad >= 1.5f && manaCount >= 8) {
+		if (TimerLoad >= 1.5f && manaCount >= 8) {
 			looseMana = 8;
         }
-        else if (TimerLoad >= 1.5f && manaCount < 8)
-            LaunchBullet(movement, 1);
-        if (TimerLoad >= 2f && manaCount >= 10) {
+		if (TimerLoad >= 2f && manaCount >= 10) {
 			looseMana = 10;
+  //TODO SURCHARGE
         }
-        else if (TimerLoad >= 2f && manaCount < 10)
-            LaunchBullet(movement, 1);
-
-        if (!attackLoad && manaCount < manaMax)
-        {
-            intervalleRecharge -= Time.deltaTime;
-            if (intervalleRecharge <= 0)
-            {
-                manaCount++;
-                intervalleRecharge = timeBeforeRecharging;
-            }
-        }
-    }
-
-    public void BlockBullet()
-    {
-
-    }
-
-    public void LaunchBullet(Vector2 movement, int multiplier)
-    {
-        GameObject balle;
-
-        //print(gameObject.transform.GetChild(0).transform.position);
-        balle = Instantiate(ball);
-        balle.transform.position = gameObject.transform.GetChild(0).transform.position;
-        if (movement.x < 0)
-            balle.GetComponent<BallScript>().setDirection(-movement);
-        else if (movement.x == 0 && movement.y == 0)
-            balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
-        else
-            balle.GetComponent<BallScript>().setDirection(movement);
-        balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier * 2);
-        Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-        manaCount -= looseMana;
-        throwOn = false;
-        TimerLoad = 0;
-        attackLoad = false;
-        chargeOn = false;
     }
 
     void IntroSoundPlayer ()
