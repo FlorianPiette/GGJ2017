@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.01.08.00">
     <object class="AudioFile" id="{dc37ef7a-8080-4e72-8ed1-421bf076b3b4}">
         <property name="assetPath">
-            <value>Texture_Sonore_02.wav</value>
+            <value>PH_Texture_Sonore_02.wav</value>
         </property>
         <property name="isStreaming">
             <value>true</value>

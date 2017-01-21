@@ -5,7 +5,7 @@
             <value>attack2_sfx</value>
         </property>
         <property name="outputFormat">
-            <value>2</value>
+            <value>1</value>
         </property>
         <relationship name="mixer">
             <destination>{c7b137b6-9d6b-4416-ad8b-dfdb7a8c8d45}</destination>
@@ -116,7 +116,6 @@
     <object class="MixerBusEffectChain" id="{c79b11f7-8d7c-494a-b1e3-96419943e2f2}">
         <relationship name="effects">
             <destination>{720266b6-74d1-4d28-be4b-8a7050a77b37}</destination>
-            <destination>{fe10dc8b-8ed5-449d-b27f-d89077038217}</destination>
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{c8caf1a0-9bc9-4453-80a6-4bf4597d4f8e}"/>
@@ -128,6 +127,5 @@
     </object>
     <object class="MixerBusPanner" id="{f57bdb73-ac26-48fe-b16e-29a223b0cdc5}"/>
     <object class="MixerBusFader" id="{720266b6-74d1-4d28-be4b-8a7050a77b37}"/>
-    <object class="SpatialiserEffect" id="{fe10dc8b-8ed5-449d-b27f-d89077038217}"/>
     <object class="MixerBusFader" id="{1e74e230-7a1b-4b03-8039-6f66576e7764}"/>
 </objects>

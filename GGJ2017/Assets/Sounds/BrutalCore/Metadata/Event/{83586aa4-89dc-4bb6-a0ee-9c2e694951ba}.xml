@@ -5,7 +5,7 @@
             <value>prepAttack_sfx</value>
         </property>
         <property name="outputFormat">
-            <value>2</value>
+            <value>1</value>
         </property>
         <relationship name="mixer">
             <destination>{ac308142-5df7-4053-b1a1-5396756fefb5}</destination>
@@ -116,7 +116,6 @@
     <object class="MixerBusEffectChain" id="{f4b8146e-2516-4b22-8c71-fceff288fefb}">
         <relationship name="effects">
             <destination>{d876a6c1-38e2-4247-8f8a-5e00f9e912b4}</destination>
-            <destination>{d289369d-4dda-4699-bdfd-d76ab04bccde}</destination>
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{614abae1-f38d-438c-a200-6ba13da11ba3}"/>
@@ -128,6 +127,5 @@
     </object>
     <object class="MixerBusPanner" id="{c9dad654-9301-4883-a814-f19b150832db}"/>
     <object class="MixerBusFader" id="{d876a6c1-38e2-4247-8f8a-5e00f9e912b4}"/>
-    <object class="SpatialiserEffect" id="{d289369d-4dda-4699-bdfd-d76ab04bccde}"/>
     <object class="MixerBusFader" id="{4792fe05-972d-4753-9369-eafe3de3749a}"/>
 </objects>
