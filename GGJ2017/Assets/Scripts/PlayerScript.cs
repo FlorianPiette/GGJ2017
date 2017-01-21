@@ -11,22 +11,36 @@ public class Boundary
 public class PlayerScript : MonoBehaviour
 {
 	[SerializeField]
+	private float manaCount;
+	[SerializeField]
 	private float speed;
 	[SerializeField]
 	private int playerId;
     //public float tilt;
 	[SerializeField]
     private Boundary boundary;
-	private new Rigidbody rigidbody;
+	private new Rigidbody2D rigidbody;
+
+	public float maxDashTime = 1.0f;
+	public float dashSpeed = 10.0f;
+	public float dashStoppingSpeed = 0.1f;
+	private float dashDelay;
+	public float dashDelayMax = 10;
+	public bool dashOn = false;
+	private float currentDashTime;
+	private string dashInput;
 
 	void Awake()
 	{
-		rigidbody = GetComponent<Rigidbody>();
+		rigidbody = GetComponent<Rigidbody2D>();
+		currentDashTime = maxDashTime;
+		dashInput = "J" + playerId + "Dash";
+		dashDelay = dashDelayMax;
 	}
 
     void FixedUpdate ()
     {
-        float moveHorizontal = Input.GetAxis ("J"+playerId+"Horizontal");
+        float moveHorizontal = Input.GetAxis ("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
 
         Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
@@ -37,5 +51,42 @@ public class PlayerScript : MonoBehaviour
             Mathf.Clamp (rigidbody.position.x, boundary.xMin, boundary.xMax), 
             Mathf.Clamp (rigidbody.position.y, boundary.yMin, boundary.yMax)
         );
+
+		//dash
+		if (Input.GetButtonDown(dashInput) && dashOn == false)
+		{
+			currentDashTime = 0.0f;
+			dashOn = true;
+		}
+
+		if (currentDashTime < maxDashTime)
+		{
+			currentDashTime += dashStoppingSpeed;
+			rigidbody.velocity = movement * dashSpeed;
+		}
+		else
+		{
+			movement = Vector2.zero;
+		}
+
+		if (dashOn)
+		{
+			dashDelay -= 0.1f;
+		}
+
+		if (dashDelay <= 0)
+		{
+			dashDelay = dashDelayMax;
+			dashOn = false;
+		}
     }
+
+	public void OnTriggerEnter2D(Collider2D other)
+	{
+		if(other.tag == "Collectibles")
+		{
+			manaCount = other.GetComponent<CollectiblesScript>().GiveMana(manaCount);
+			other.GetComponent<CollectiblesScript>().Kill();
+		}
+	}
 }
