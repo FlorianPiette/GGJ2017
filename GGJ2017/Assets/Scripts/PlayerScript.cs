@@ -27,6 +27,7 @@ public class PlayerScript : MonoBehaviour
 	private new Rigidbody2D rigidbody;
 	private Vector2 savedMovement;
 
+	private string playerName;
 	public bool startOn = true;
 	public float maxDashTime = 1.0f;
 	public float dashSpeed = 10.0f;
@@ -38,6 +39,7 @@ public class PlayerScript : MonoBehaviour
 	private float currentDashTime;
 	private string throwInput;
 	private bool throwOn = false;
+	private bool chargeOn = false;
 	private string dashInput;
     [SerializeField]
     private GameObject ball;
@@ -49,6 +51,7 @@ public class PlayerScript : MonoBehaviour
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
+		playerName = transform.name;
 
 		currentDashTime = maxDashTime;
 		throwInput = "J" + playerId + "Action";
@@ -69,12 +72,8 @@ public class PlayerScript : MonoBehaviour
 		if(!dashOn && !throwOn && movement != Vector2.zero)
 		{
 			rigidbody.velocity = movement * speed;
-			animator.Play("Gredd_Run");
+			animator.Play(playerName+"_Run");
 		}
-		else if (dashOn)
-			animator.Play("Gredd_Dash");
-		else if (throwOn)
-			animator.Play("Gredd_Throw");
 
         rigidbody.position = new Vector2 
         (
@@ -87,6 +86,7 @@ public class PlayerScript : MonoBehaviour
 		{
 			currentDashTime = 0.0f;
 			dashOn = true;
+			animator.Play(playerName + "_Dash");
 			canDash = false;
 			savedMovement = movement;
 		}
@@ -114,11 +114,17 @@ public class PlayerScript : MonoBehaviour
 		}
 		if (Input.GetButtonUp(throwInput) && phase != PhaseManager.Phase.Defense)
 		{
+			chargeOn = false;
+			throwOn = true;
+			animator.Play(playerName + "_Throw");
+			int multiplier = 1;
+			if (TimerLoad > 2.5f)
+				multiplier = 2;
+
 			TimerLoad = 0;
 			attackLoad = false;
 			manaCount -= looseMana;
 
-			throwOn = true;
             GameObject balle;
 
 			//print(gameObject.transform.GetChild(0).transform.position);
@@ -130,7 +136,7 @@ public class PlayerScript : MonoBehaviour
 				balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
             else
                 balle.GetComponent<BallScript>().setDirection(movement);
-            balle.GetComponent<BallScript>().setVitesse(5); //TODO Gestion de vitesse
+            balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier);
             Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
 			throwOn = false;
@@ -139,24 +145,26 @@ public class PlayerScript : MonoBehaviour
 		if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
 		{
 			attackLoad = true;
-			looseMana = 0;
+			looseMana = 2;
+			chargeOn = true;
+			animator.Play(playerName + "_RunBall");
 		}
 
 		if (attackLoad == true) {
 			TimerLoad += Time.deltaTime;
 		}
 
-		if (TimerLoad >= 0.5) {
-			looseMana = 2;
-		}
-		if (TimerLoad >= 0.1) {
-			looseMana = 3;
-		}
-		if (TimerLoad >= 1.5) {
+		if (TimerLoad >= 0.5f) {
 			looseMana = 4;
 		}
-		if (TimerLoad >= 2) {
-			looseMana = 5;
+		if (TimerLoad >= 1f) {
+			looseMana = 6;
+		}
+		if (TimerLoad >= 1.5f) {
+			looseMana = 8;
+		}
+		if (TimerLoad >= 2f) {
+			looseMana = 10;
 		}
     }
 }
