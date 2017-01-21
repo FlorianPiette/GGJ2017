@@ -21,6 +21,7 @@ public class PlayerScript : MonoBehaviour
 	[SerializeField]
     private Boundary boundary;
 	private new Rigidbody2D rigidbody;
+	private Vector2 savedMovement;
 
 	public float maxDashTime = 1.0f;
 	public float dashSpeed = 10.0f;
@@ -28,12 +29,18 @@ public class PlayerScript : MonoBehaviour
 	private float dashDelay;
 	public float dashDelayMax = 10;
 	public bool dashOn = false;
+	public bool canDash = true;
 	private float currentDashTime;
 	private string dashInput;
+
+	[HideInInspector]
+	public Animator animator;
 
 	void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
+		animator = GetComponent<Animator>();
+
 		currentDashTime = maxDashTime;
 		dashInput = "J" + playerId + "Dash";
 		dashDelay = dashDelayMax;
@@ -43,11 +50,20 @@ public class PlayerScript : MonoBehaviour
     {
 		_manaCount = manaCount;
 
-        float moveHorizontal = Input.GetAxis ("J" + playerId + "Horizontal");
+		float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
 
-        Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
-        rigidbody.velocity = movement * speed;
+		Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+
+		if(!dashOn)
+		{
+			rigidbody.velocity = movement * speed;
+		}
+
+		if(rigidbody.velocity != Vector2.zero)
+		{
+			animator.Play("Gredd_Run");
+		}
 
         rigidbody.position = new Vector2 
         (
@@ -56,23 +72,27 @@ public class PlayerScript : MonoBehaviour
         );
 
 		//dash
-		if (Input.GetButtonDown(dashInput) && dashOn == false)
+		if (Input.GetButtonDown(dashInput) && dashOn == false && canDash == true)
 		{
 			currentDashTime = 0.0f;
 			dashOn = true;
+			canDash = false;
+			savedMovement = movement;
+			animator.Play("Gredd_Dash");
 		}
 
 		if (currentDashTime < maxDashTime)
 		{
 			currentDashTime += dashStoppingSpeed;
-			rigidbody.velocity = movement * dashSpeed;
+			rigidbody.velocity = savedMovement * dashSpeed;
 		}
 		else
 		{
+			dashOn = false;
 			movement = Vector2.zero;
 		}
 
-		if (dashOn)
+		if (!canDash)
 		{
 			dashDelay -= 0.1f;
 		}
@@ -80,15 +100,7 @@ public class PlayerScript : MonoBehaviour
 		if (dashDelay <= 0)
 		{
 			dashDelay = dashDelayMax;
-			dashOn = false;
+			canDash = true;
 		}
     }
-
-	void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.gameObject.name == "shot")
-		{
-			other.gameObject.GetComponent<ShieldScript>().ShieldCollide();
-		}
-	}
 }
