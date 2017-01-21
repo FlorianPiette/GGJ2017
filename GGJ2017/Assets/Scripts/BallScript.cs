@@ -62,7 +62,7 @@ public class BallScript : MonoBehaviour
 			}
 			if(collision.gameObject.tag == "Player")
 			{
-				collision.gameObject.GetComponent<PlayerScript>().animator.Play("Gredd_Guard");
+                collision.gameObject.GetComponent<PlayerScript>().BlockBullet();
 			}
 			if(collision.gameObject.tag == "Ball")
 			{

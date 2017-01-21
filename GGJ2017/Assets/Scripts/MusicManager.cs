@@ -10,10 +10,11 @@ public class MusicManager : MonoBehaviour {
     EventInstance heartFightMusic;
     bool currentlyInHeartMode = false;
 
+    public bool debugModeActivated = false;
+
     // Use this for initialization
     void Start () {
-
-        Debug.LogError("CAUTION : Supprimer le debug avec I");
+        
         heartFightMusic = FMODUnity.RuntimeManager.CreateInstance(heartFight);
         heartFightMusic.start();
         heartFightMusic.setVolume(0);
@@ -22,18 +23,21 @@ public class MusicManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        //Debug
-		if (Input.GetKeyDown(KeyCode.I))
+        if (debugModeActivated)
         {
-            if (currentlyInHeartMode)
+            //Debug
+            if (Input.GetKeyDown(KeyCode.I))
             {
-                currentlyInHeartMode = false;
-                heartFightMusic.setVolume(0f);
-            }
-            else if (!currentlyInHeartMode)
-            {
-                currentlyInHeartMode = true;
-                heartFightMusic.setVolume(1f);
+                if (currentlyInHeartMode)
+                {
+                    currentlyInHeartMode = false;
+                    heartFightMusic.setVolume(0f);
+                }
+                else if (!currentlyInHeartMode)
+                {
+                    currentlyInHeartMode = true;
+                    heartFightMusic.setVolume(1f);
+                }
             }
         }
 	}
