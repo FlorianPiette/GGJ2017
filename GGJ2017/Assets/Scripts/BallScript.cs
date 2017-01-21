@@ -5,7 +5,7 @@ using UnityEngine;
 public class BallScript : MonoBehaviour
 {
     private Vector2 direction;
-    private int vitesse;
+    private float vitesse;
 	private Collider2D collider;
 
 	void Start()
@@ -37,7 +37,7 @@ public class BallScript : MonoBehaviour
         this.direction = direction;
     }
 
-    public void setVitesse(int vitesse)
+    public void setVitesse(float vitesse)
     {
         this.vitesse = vitesse;
     }
