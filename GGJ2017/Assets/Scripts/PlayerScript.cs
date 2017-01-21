@@ -145,6 +145,7 @@ public class PlayerScript : MonoBehaviour
             balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier);
             Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
+            ShakeScript.Instance.Shake(ShakeScript.ScreenshakeTypes.Weak); 
 			throwOn = false;
         }
 
