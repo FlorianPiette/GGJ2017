@@ -132,6 +132,9 @@ public class PlayerScript : MonoBehaviour
 			//print(gameObject.transform.GetChild(0).transform.position);
             balle = Instantiate(ball);
             balle.transform.position = gameObject.transform.GetChild(0).transform.position;
+
+
+
             if (movement.x < 0)
                 balle.GetComponent<BallScript>().setDirection(-movement);
 			else if (movement.x == 0 && movement.y == 0)
