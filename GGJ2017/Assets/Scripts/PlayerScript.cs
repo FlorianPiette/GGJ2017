@@ -10,6 +10,10 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
+	public bool attackLoad;
+	public float TimerLoad;
+	public int looseMana;
+
 	private float _manaCount;
 	public float manaCount;
 	[SerializeField]
@@ -108,8 +112,12 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			canDash = true;
 		}
-		if (Input.GetButtonDown(throwInput))
+		if (Input.GetButtonUp(throwInput) && phase != PhaseManager.Phase.Defense)
 		{
+			TimerLoad = 0;
+			attackLoad = false;
+			manaCount -= looseMana;
+
 			throwOn = true;
             GameObject balle;
 
@@ -127,5 +135,28 @@ public class PlayerScript : MonoBehaviour
 
 			throwOn = false;
         }
+
+		if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
+		{
+			attackLoad = true;
+			looseMana = 0;
+		}
+
+		if (attackLoad == true) {
+			TimerLoad += Time.deltaTime;
+		}
+
+		if (TimerLoad >= 0.5) {
+			looseMana = 2;
+		}
+		if (TimerLoad >= 0.1) {
+			looseMana = 3;
+		}
+		if (TimerLoad >= 1.5) {
+			looseMana = 4;
+		}
+		if (TimerLoad >= 2) {
+			looseMana = 5;
+		}
     }
 }

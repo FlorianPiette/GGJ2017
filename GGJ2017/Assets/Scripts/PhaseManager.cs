@@ -16,6 +16,7 @@ public class PhaseManager : MonoBehaviour
 
 	public PlayerScript[] Players;
 	public ManaSpawner[] ManaSpawners;
+	public float manaMaxLimitToSwitch = 100;
 
 	void Awake ()
 	{
