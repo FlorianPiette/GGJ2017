@@ -50,6 +50,8 @@ public class PlayerScript : MonoBehaviour
     [FMODUnity.EventRef]
     public string golemActivation = "event:/golemActivation_sfx";
 
+    public float surcharge;
+
     void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
@@ -126,52 +128,56 @@ public class PlayerScript : MonoBehaviour
 			int multiplier = 1;
 			if (TimerLoad > 2.5f)
 				multiplier = 2;
+            if (TimerLoad < surcharge)
+            {
+                GameObject balle;
 
-			TimerLoad = 0;
-			attackLoad = false;
-			manaCount -= looseMana;
+                //print(gameObject.transform.GetChild(0).transform.position);
+                balle = Instantiate(ball);
+                balle.transform.position = gameObject.transform.GetChild(0).transform.position;
+                if (movement.x < 0)
+                    balle.GetComponent<BallScript>().setDirection(-movement);
+                else if (movement.x == 0 && movement.y == 0)
+                    balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
+                else
+                    balle.GetComponent<BallScript>().setDirection(movement);
+                balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier);
+                Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
-            GameObject balle;
+                throwOn = false;
+            }
 
-			//print(gameObject.transform.GetChild(0).transform.position);
-            balle = Instantiate(ball);
-            balle.transform.position = gameObject.transform.GetChild(0).transform.position;
-            if (movement.x < 0)
-                balle.GetComponent<BallScript>().setDirection(-movement);
-			else if (movement.x == 0 && movement.y == 0)
-				balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
-            else
-                balle.GetComponent<BallScript>().setDirection(movement);
-            balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier);
-            Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-
-			throwOn = false;
+            TimerLoad = 0;
+            attackLoad = false;
+            manaCount -= looseMana;
         }
 
-		if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
+        if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense && manaCount >= 2)
 		{
 			attackLoad = true;
 			looseMana = 2;
 			chargeOn = true;
 			animator.Play(playerName + "_RunBall");
+            //TODO Stop rechargement
 		}
 
 		if (attackLoad == true) {
 			TimerLoad += Time.deltaTime;
 		}
 
-		if (TimerLoad >= 0.5f) {
+		if (TimerLoad >= 0.5f && manaCount >= 4) {
 			looseMana = 4;
-		}
-		if (TimerLoad >= 1f) {
+        }
+		if (TimerLoad >= 1f && manaCount >= 6) {
 			looseMana = 6;
-		}
-		if (TimerLoad >= 1.5f) {
+        }
+		if (TimerLoad >= 1.5f && manaCount >= 8) {
 			looseMana = 8;
-		}
-		if (TimerLoad >= 2f) {
+        }
+		if (TimerLoad >= 2f && manaCount >= 10) {
 			looseMana = 10;
-		}
+  //TODO SURCHARGE
+        }
     }
 
     void IntroSoundPlayer ()
