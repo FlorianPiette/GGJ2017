@@ -23,56 +23,14 @@
 [LOG] Thread::initThread                       : - Stacksize 65536.  Stack pointer 0000000000000000 : usesemaphore = 0 : sleeptime = 1
 [LOG] Thread::callback                         : * FMOD Studio bank load thread started
 [LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
-[LOG] SystemI::createSound                     : filename = Assets\Sounds\BrutalCore\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
-[LOG] SystemI::createSound                     : setdata soundi = 000000000EE65D78 : node = 000000002A45B940
-[LOG] SystemI::createSound                     : add node to async list : head = 000000002A327A58.  list count = 0
-[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000000EE65D78
-[LOG] SystemI::createSoundInternal             :     filename = Assets\Sounds\BrutalCore\Build\Desktop/Master Bank.bank : mode 02010082
-[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
-[LOG] SystemI::createSoundInternal             :     exinfo->length             = 1169664
-[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 17408
-[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 000000002A45BA58
-[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
-[LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
-[LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
-[LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
-[LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
-[LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 731136
-[LOG] SystemI::createSample                    :     channels = 2
-[LOG] SystemI::createSample                    :     output = 00000000189108D8
-[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 731136, channels 2, format 2, freq 48000, mode 0201008a
-[LOG] System::createSoundInternal              :     1 subsounds detected.
-[LOG] System::createSoundInternal              :     Seek stream to start
-[LOG] System::createSoundInternal              :     flush stream buffer
-[LOG] System::createSoundInternal              :     flush successful.
-[LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
-[LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
-
-[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000000EE65D78
-[LOG] SoundI::getSubSound                      : sound 000000000EE65D78.  Subsound index 0 / 1
 [LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
-[LOG] SoundI::release                          : MUSIC_InGame_Loop_140bpm4_4 (000000000EE65D78)
-[LOG] SoundI::release                          : remove stream samples. (000000000EE65D78)
-[LOG] SoundI::release                          :     MUSIC_InGame_Loop_140bpm4_4 (000000000EE7E498)
-[LOG] SoundI::release                          : release subsounds. (000000000EE65D78)
-[LOG] SoundI::release                          :     MUSIC_InGame_Loop_140bpm4_4 (000000000EE65A38)
-[LOG] SoundI::release                          : release codec. (000000000EE65D78)
-[LOG] SoundI::release                          :  (00000000187A92F8)
-[LOG] SoundI::release                          : release subsounds. (00000000187A92F8)
-[LOG] SoundI::release                          :     SFX_Event_GolemOn (000000002AA543D8)
-[LOG] SoundI::release                          : release codec. (00000000187A92F8)
-[LOG] SoundI::release                          :  (00000000187A9748)
-[LOG] SoundI::release                          : release subsounds. (00000000187A9748)
-[LOG] SoundI::release                          :     MUSIC_InGame_Intro_140bpm4_4 (000000002AA53D98)
-[LOG] SoundI::release                          : release codec. (00000000187A9748)
-[LOG] Thread::callback                         : * FMOD Studio update thread finished
-[LOG] Thread::close                            : FMOD Studio update thread thread destroyed
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
+[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
+[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
 [LOG] Thread::callback                         : * FMOD Studio bank load thread finished
 [LOG] Thread::close                            : FMOD Studio bank load thread thread destroyed
-[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
 [LOG] Thread::callback                         : * FMOD Studio sample load thread finished
 [LOG] Thread::close                            : FMOD Studio sample load thread thread destroyed
 [LOG] LiveUpdate::release                      : 
@@ -91,10 +49,4 @@
 [LOG] SystemI::close                           : Free channel pool.
 [LOG] SystemI::close                           : done.
 
-[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
-[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
-[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
-[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
-[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
-[LOG] Manager::readBank                        : fileversion = 80, compatVersion = 70 (oldest = 44, newest = 80)
-[LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
+[LOG] System::create                           : Header version = 1.08.15. Current version = 1.08.15.
