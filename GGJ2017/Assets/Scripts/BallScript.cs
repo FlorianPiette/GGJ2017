@@ -6,12 +6,26 @@ public class BallScript : MonoBehaviour
 {
     private Vector2 direction;
     private int vitesse;
+	private Collider2D collider;
 
-	// Use this for initialization
-	void Start () {
-        direction = new Vector2(2, 5);
-        vitesse = 1;
+	void Start()
+	{
+		collider = GetComponent<Collider2D>();
+		StartCoroutine("EnabledCollider");
 	}
+
+	IEnumerator EnabledCollider()
+	{
+		float timer = 1;
+		while(timer < 0)
+		{
+			timer -= Time.deltaTime;
+			yield return new WaitForEndOfFrame();
+		}
+		collider.enabled = true;
+		yield return null;
+	}
+
 	
 	// Update is called once per frame
 	void Update () {
@@ -49,6 +63,10 @@ public class BallScript : MonoBehaviour
 			if(collision.gameObject.tag == "Player")
 			{
 				collision.gameObject.GetComponent<PlayerScript>().animator.Play("Gredd_Guard");
+			}
+			if(collision.gameObject.tag == "Ball")
+			{
+				return;
 			}
 			Destroy(gameObject);
 		}

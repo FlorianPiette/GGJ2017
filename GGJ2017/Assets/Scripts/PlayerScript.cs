@@ -23,6 +23,7 @@ public class PlayerScript : MonoBehaviour
 	private new Rigidbody2D rigidbody;
 	private Vector2 savedMovement;
 
+	public bool startOn = true;
 	public float maxDashTime = 1.0f;
 	public float dashSpeed = 10.0f;
 	public float dashStoppingSpeed = 0.1f;
@@ -31,6 +32,8 @@ public class PlayerScript : MonoBehaviour
 	public bool dashOn = false;
 	public bool canDash = true;
 	private float currentDashTime;
+	private string throwInput;
+	private bool throwOn = false;
 	private string dashInput;
     [SerializeField]
     private GameObject ball;
@@ -44,6 +47,7 @@ public class PlayerScript : MonoBehaviour
 		animator = GetComponent<Animator>();
 
 		currentDashTime = maxDashTime;
+		throwInput = "J" + playerId + "Action";
 		dashInput = "J" + playerId + "Dash";
 		dashDelay = dashDelayMax;
     }
@@ -58,15 +62,15 @@ public class PlayerScript : MonoBehaviour
 
 		Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-		if(!dashOn)
+		if(!dashOn && !throwOn && movement != Vector2.zero)
 		{
 			rigidbody.velocity = movement * speed;
-		}
-
-		if(rigidbody.velocity != Vector2.zero)
-		{
 			animator.Play("Gredd_Run");
 		}
+		else if (dashOn)
+			animator.Play("Gredd_Dash");
+		else if (throwOn)
+			animator.Play("Gredd_Throw");
 
         rigidbody.position = new Vector2 
         (
@@ -81,7 +85,6 @@ public class PlayerScript : MonoBehaviour
 			dashOn = true;
 			canDash = false;
 			savedMovement = movement;
-			animator.Play("Gredd_Dash");
 		}
 
 		if (currentDashTime < maxDashTime)
@@ -92,7 +95,7 @@ public class PlayerScript : MonoBehaviour
 		else
 		{
 			dashOn = false;
-			movement = Vector2.zero;
+			//movement = Vector2.zero;
 		}
 
 		if (!canDash)
@@ -105,19 +108,24 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			canDash = true;
 		}
-        if (Input.GetKeyDown(KeyCode.P))
-        {
+		if (Input.GetButtonDown(throwInput))
+		{
+			throwOn = true;
             GameObject balle;
 
-//print(gameObject.transform.GetChild(0).transform.position);
+			//print(gameObject.transform.GetChild(0).transform.position);
             balle = Instantiate(ball);
             balle.transform.position = gameObject.transform.GetChild(0).transform.position;
             if (movement.x < 0)
                 balle.GetComponent<BallScript>().setDirection(-movement);
+			else if (movement.x == 0 && movement.y == 0)
+				balle.GetComponent<BallScript>().setDirection(new Vector2(1, 0));
             else
                 balle.GetComponent<BallScript>().setDirection(movement);
-            balle.GetComponent<BallScript>().setVitesse(2); //TODO Gestion de vitesse
+            balle.GetComponent<BallScript>().setVitesse(5); //TODO Gestion de vitesse
             Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+
+			throwOn = false;
         }
     }
 }
