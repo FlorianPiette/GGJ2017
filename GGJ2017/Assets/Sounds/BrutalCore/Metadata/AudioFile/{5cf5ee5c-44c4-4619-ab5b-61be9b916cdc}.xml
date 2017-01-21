@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="AudioFile" id="{5cf5ee5c-44c4-4619-ab5b-61be9b916cdc}">
+        <property name="assetPath">
+            <value>SFX_Player_Att_Prep_01.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>0.86885416666666671</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{004c82e2-e82f-4ed2-8469-597d9bfb096d}</destination>
+        </relationship>
+    </object>
+</objects>

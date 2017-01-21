@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="Event" id="{eff59843-1247-4532-bf95-ded6edff3dd0}"/>
+    <object class="MasterTrack" id="{5a8c5868-75a4-44e7-818c-94978249ff80}"/>
+    <object class="MixerInput" id="{e4887933-b3e4-47d7-98e0-14a324c94108}"/>
+    <object class="EventAutomatableProperties" id="{7b403398-2326-4713-bb01-c2139e50df31}"/>
+    <object class="MarkerTrack" id="{55f4b05d-add7-4698-b890-f663b607b3c9}"/>
+    <object class="GroupTrack" id="{180263ee-69b6-4dc1-8be7-15540c6fae7d}"/>
+    <object class="Timeline" id="{8c63ad4c-e840-4626-b2fd-84b7d5c43be0}">
+        <property name="cursorPosition">
+            <value>0.19407010613207548</value>
+        </property>
+        <property name="uiLastRulerScaleRatio">
+            <value>0.021563345125786164</value>
+        </property>
+    </object>
+    <object class="EventMixerMaster" id="{6bef4d61-94d4-48a6-8de0-06109a30de4e}">
+        <relationship name="input">
+            <destination>{4e7f3293-099c-4597-a0fe-f193b4ba68dc}</destination>
+        </relationship>
+    </object>
+    <object class="MixerBusEffectChain" id="{31d83d76-914c-4d68-adcc-1edadb98e1e4}"/>
+    <object class="MixerBusPanner" id="{fec73440-3989-4c61-a75c-001ead7b20cb}"/>
+    <object class="EventMixerGroup" id="{4e7f3293-099c-4597-a0fe-f193b4ba68dc}"/>
+    <object class="MixerBusEffectChain" id="{9bd35754-a451-4958-a063-281c119bc4dd}"/>
+    <object class="MixerBusPanner" id="{e922d6a9-0589-4b75-ae12-83ed2a1b670f}"/>
+    <object class="MixerBusFader" id="{82df1ea6-84ed-408e-a485-4e598b1d6bd1}"/>
+    <object class="MixerBusEffectChain" id="{ed2a9ac5-49c2-435a-ac6b-fc96bd32ee8d}"/>
+    <object class="MixerBusPanner" id="{d5f9838b-efed-464d-a8b6-2dcdf2b0f05f}"/>
+    <object class="MixerBusFader" id="{3413be8d-9ae3-4581-81ed-da97ee465bd4}"/>
+    <object class="SpatialiserEffect" id="{ee98c488-11d8-4b30-9ae0-0cc6cc24792c}"/>
+    <object class="MixerBusFader" id="{97b3fb50-6103-4a22-b157-d7d81846f0fc}"/>
+</objects>

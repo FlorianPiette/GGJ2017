@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="AudioFile" id="{93cf890c-41c1-4ebf-a0b0-457c53ac9534}">
+        <property name="assetPath">
+            <value>enemy_jump.wav</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>0.53124716553287987</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{004c82e2-e82f-4ed2-8469-597d9bfb096d}</destination>
+        </relationship>
+    </object>
+</objects>

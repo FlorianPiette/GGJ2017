@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="AudioFile" id="{dbdd4129-8fa6-433a-a2ad-d3e23f63444f}">
+        <property name="assetPath">
+            <value>MUSIC_InGame_Loop_140bpm4_4.wav</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>46.28572916666667</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{004c82e2-e82f-4ed2-8469-597d9bfb096d}</destination>
+        </relationship>
+    </object>
+</objects>
