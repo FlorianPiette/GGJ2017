@@ -41,7 +41,10 @@ public class PlayerScript : MonoBehaviour
 	[HideInInspector]
 	public Animator animator;
 
-	void Awake()
+    [FMODUnity.EventRef]
+    public string golemActivation = "event:/golemActivation_sfx";
+
+    void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
@@ -50,6 +53,8 @@ public class PlayerScript : MonoBehaviour
 		throwInput = "J" + playerId + "Action";
 		dashInput = "J" + playerId + "Dash";
 		dashDelay = dashDelayMax;
+
+        FMODUnity.RuntimeManager.PlayOneShot(golemActivation, Vector3.zero);
     }
 
     void FixedUpdate ()
