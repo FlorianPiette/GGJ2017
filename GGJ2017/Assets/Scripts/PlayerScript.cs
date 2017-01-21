@@ -112,7 +112,7 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			canDash = true;
 		}
-		if (Input.GetButtonUp(throwInput))
+		if (Input.GetButtonUp(throwInput) && phase != PhaseManager.Phase.Defense)
 		{
 			TimerLoad = 0;
 			attackLoad = false;
@@ -136,9 +136,10 @@ public class PlayerScript : MonoBehaviour
 			throwOn = false;
         }
 
-		if (Input.GetButtonDown(throwInput))
+		if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
 		{
 			attackLoad = true;
+			looseMana = 0;
 		}
 
 		if (attackLoad == true) {
