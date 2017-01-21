@@ -1,10 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PhaseManager : MonoBehaviour
 {
 	public static PhaseManager Instance;
+    public bool isInitiate = false;
 
 	public enum Phase
 	{
@@ -21,7 +22,7 @@ public class PhaseManager : MonoBehaviour
 	void Awake ()
 	{
 		Instance = this;
-		AttributePhase();
+		InitiatePhase();
 	}
 	
 	void Update ()
@@ -32,10 +33,34 @@ public class PhaseManager : MonoBehaviour
 			AttributePhase();
 		}
 	}
+    public void InitiatePhase()
+    {
+        isInitiate = false;
+        Players[0].phase = Phase.Offense;
+        Players[1].phase = Phase.Offense;
+    }
 
-	public void AttributePhase()
+    public void InitiateWinner(string winner)
+    {
+        
+        if (winner == "p0")
+        {
+            Players[0].phase = Phase.Offense;
+            Players[1].phase = Phase.Defense;
+            ManaSpawners[0].GetComponent<ManaSpawner>().enabled = !ManaSpawners[0].GetComponent<ManaSpawner>().enabled;
+        }
+        else
+        {
+            Players[1].phase = Phase.Offense;
+            Players[0].phase = Phase.Defense;
+            ManaSpawners[1].GetComponent<ManaSpawner>().enabled = !ManaSpawners[1].GetComponent<ManaSpawner>().enabled;
+        }
+        isInitiate = true;
+    }
+
+    public void AttributePhase()
 	{
-		if(Players[0].phase != Phase.None)
+        if (Players[0].phase != Phase.None)
 		{
 			if (Players[0].phase == Phase.Offense || Players[0].phase == Phase.HeartAttack)
 			{
