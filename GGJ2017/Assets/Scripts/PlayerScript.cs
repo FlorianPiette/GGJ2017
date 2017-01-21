@@ -11,21 +11,23 @@ public class Boundary
 public class PlayerScript : MonoBehaviour
 {
 	[SerializeField]
-    private float speed;
+	private float speed;
+	[SerializeField]
+	private int playerId;
     //public float tilt;
 	[SerializeField]
     private Boundary boundary;
-	private Rigidbody2D rigidbody;
+	private new Rigidbody rigidbody;
 
 	void Awake()
 	{
-		rigidbody = GetComponent<Rigidbody2D>();
+		rigidbody = GetComponent<Rigidbody>();
 	}
 
     void FixedUpdate ()
     {
-        float moveHorizontal = Input.GetAxis ("Horizontal");
-        float moveVertical = Input.GetAxis ("Vertical");
+        float moveHorizontal = Input.GetAxis ("J"+playerId+"Horizontal");
+		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
 
         Vector2 movement = new Vector2 (moveHorizontal, moveVertical);
         rigidbody.velocity = movement * speed;
@@ -35,7 +37,5 @@ public class PlayerScript : MonoBehaviour
             Mathf.Clamp (rigidbody.position.x, boundary.xMin, boundary.xMax), 
             Mathf.Clamp (rigidbody.position.y, boundary.yMin, boundary.yMax)
         );
-
-        //rigidbody.rotation = Quaternion.Euler (0.0f, 0.0f, rigidbody.velocity.x * -tilt);
     }
 }
