@@ -65,6 +65,7 @@ public class PlayerScript : MonoBehaviour
 
 		float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
+        rigidbody.velocity = Vector2.zero;
  //       print(moveHorizontal + "," + moveVertical);
 
 		Vector2 movement = new Vector2(moveHorizontal, moveVertical);
