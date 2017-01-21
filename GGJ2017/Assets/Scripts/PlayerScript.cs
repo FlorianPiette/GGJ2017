@@ -10,6 +10,10 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
+	public bool attackLoad;
+	public float TimerLoad;
+	public int looseMana;
+
 	private float _manaCount;
 	public float manaCount;
 	[SerializeField]
@@ -41,10 +45,7 @@ public class PlayerScript : MonoBehaviour
 	[HideInInspector]
 	public Animator animator;
 
-    [FMODUnity.EventRef]
-    public string golemActivation = "event:/golemActivation_sfx";
-
-    void Awake()
+	void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
@@ -53,17 +54,11 @@ public class PlayerScript : MonoBehaviour
 		throwInput = "J" + playerId + "Action";
 		dashInput = "J" + playerId + "Dash";
 		dashDelay = dashDelayMax;
-
-        FMODUnity.RuntimeManager.PlayOneShot(golemActivation, Vector3.zero);
     }
 
     void FixedUpdate ()
     {
 		_manaCount = manaCount;
-		if(_manaCount == PhaseManager.Instance.manaMaxLimitToSwitch)
-		{
-			PhaseManager.Instance.AttributePhase();
-		}
 
 		float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
@@ -117,8 +112,12 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			canDash = true;
 		}
-		if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
+		if (Input.GetButtonUp(throwInput) && phase != PhaseManager.Phase.Defense)
 		{
+			TimerLoad = 0;
+			attackLoad = false;
+			manaCount -= looseMana;
+
 			throwOn = true;
             GameObject balle;
 
@@ -136,5 +135,28 @@ public class PlayerScript : MonoBehaviour
 
 			throwOn = false;
         }
+
+		if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense)
+		{
+			attackLoad = true;
+			looseMana = 0;
+		}
+
+		if (attackLoad == true) {
+			TimerLoad += Time.deltaTime;
+		}
+
+		if (TimerLoad >= 0.5) {
+			looseMana = 2;
+		}
+		if (TimerLoad >= 0.1) {
+			looseMana = 3;
+		}
+		if (TimerLoad >= 1.5) {
+			looseMana = 4;
+		}
+		if (TimerLoad >= 2) {
+			looseMana = 5;
+		}
     }
 }
