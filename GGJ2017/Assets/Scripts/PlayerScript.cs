@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,6 +48,8 @@ public class PlayerScript : MonoBehaviour
 	[HideInInspector]
 	public Animator animator;
 
+    private bool movementIsBlocked = false; //During block animation
+
     [FMODUnity.EventRef]
     public string golemActivation = "event:/golemActivation_sfx";
 
@@ -62,18 +65,18 @@ public class PlayerScript : MonoBehaviour
 		dashDelay = dashDelayMax;
 
     }
-
+    
     void FixedUpdate ()
     {
 		_manaCount = manaCount;
-
+        
 		float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
  //       print(moveHorizontal + "," + moveVertical);
 
 		Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-		if (!dashOn && !chargeOn && !throwOn && movement != Vector2.zero)
+		if (!dashOn && !chargeOn && !throwOn && movement != Vector2.zero && !movementIsBlocked)
 		{
 			rigidbody.velocity = movement * speed;
 			animator.Play(playerName + "_Run");
@@ -182,5 +185,28 @@ public class PlayerScript : MonoBehaviour
     {
         if (playerId == 1)
             FMODUnity.RuntimeManager.PlayOneShot(golemActivation, Vector3.zero);
+    }
+
+
+    public void BlockBullet()
+    {
+        animator.Play("Gredd_Guard");
+        ShakeScript.Instance.Shake(ShakeScript.ScreenshakeTypes.Medium);
+
+        movementIsBlocked = true;
+        //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
+        StopCoroutine("ReactivateMovement");
+        StartCoroutine(PendingForReactivateMovement(1.5f));
+    }
+
+    IEnumerator PendingForReactivateMovement(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        ReactivateMovement();
+    }
+
+    public void ReactivateMovement()
+    {
+        movementIsBlocked = false;
     }
 }
