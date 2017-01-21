@@ -31,6 +31,7 @@
 [LOG] PlaybackSystem::acquireMasterBus         : Setting master channel group format to 6
 [LOG] SystemI::createSoundInternal             : filename =  : mode 02000202
 [LOG] SystemI::createSoundInternal             : exinfo->cbsize             = 232
+<<<<<<< HEAD
 [LOG] SystemI::createSoundInternal             : exinfo->length             = 1169664
 [LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 17408
 [LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
@@ -42,20 +43,39 @@
 [LOG] SystemI::createSoundInternal             : exinfo->userread           = 000007FED59D5200
 [LOG] SystemI::createSoundInternal             : exinfo->userseek           = 000007FED59D52B0
 [LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000002B026968
+=======
+[LOG] SystemI::createSoundInternal             : exinfo->length             = 1597120
+[LOG] SystemI::createSoundInternal             : exinfo->fileoffset         = 17088
+[LOG] SystemI::createSoundInternal             : exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlist      = 000000003319FB38
+[LOG] SystemI::createSoundInternal             : exinfo->inclusionlistnum   = 1
+[LOG] SystemI::createSoundInternal             : exinfo->suggestedsoundtype = 5
+[LOG] SystemI::createSoundInternal             : exinfo->useropen           = 000007FEE4C25130
+[LOG] SystemI::createSoundInternal             : exinfo->userclose          = 000007FEE4C25100
+[LOG] SystemI::createSoundInternal             : exinfo->userread           = 000007FEE4C25200
+[LOG] SystemI::createSoundInternal             : exinfo->userseek           = 000007FEE4C252B0
+[LOG] SystemI::createSoundInternal             : exinfo->fileuserdata       = 000000003288BC78
+>>>>>>> Adding music (Heart attack, new fight loop)
 [LOG] SystemI::createSoundInternal             : exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             : Format has 1 subsounds.
 [LOG] SystemI::createSoundInternal             : Create as FMOD_CREATESAMPLE
 [LOG] SystemI::createSoundInternal             : Multi-sample sound (1 subsounds), create a sample container.
 [LOG] SystemI::createSoundInternal             : creating subsound 0/1
-[LOG] SystemI::createSample                    : mode 02000202 length 246858 samples, lengthbytes 72480
+[LOG] SystemI::createSample                    : mode 02000202 length 113600 samples, lengthbytes 28832
 [LOG] SystemI::createSample                    : channels = 2
+<<<<<<< HEAD
 [LOG] SystemI::createSample                    : output = 000000002B411F28
 [LOG] OutputSoftware::createSample             : lengthpcm 246858, lengthbytes 72480, channels 2, format 2, freq 48000, mode 0200020a
+=======
+[LOG] SystemI::createSample                    : output = 0000000031DA3A38
+[LOG] OutputSoftware::createSample             : lengthpcm 113600, lengthbytes 28832, channels 2, format 2, freq 48000, mode 0200020a
+>>>>>>> Adding music (Heart attack, new fight loop)
 [LOG] SystemI::createSoundInternal             : No name found in file, use filename.
 [LOG] SystemI::createSoundInternal             : done.  OpenState now = FMOD_OPENSTATE_READY.
 
 [LOG] SystemI::createSound                     : filename = Assets\Sounds\BrutalCore\Build\Desktop/Master Bank.bank : mode 02010082
 [LOG] SystemI::createSound                     : FMOD_NONBLOCKING specified.  Putting into queue to be opened asynchronously!
+<<<<<<< HEAD
 [LOG] SystemI::createSound                     : setdata soundi = 000000002534BA38 : node = 00000000252F4E30
 [LOG] SystemI::createSound                     : add node to async list : head = 000000000C3BFA88.  list count = 0
 [LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 000000002534BA38
@@ -65,16 +85,32 @@
 [LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 17408
 [LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 00000000252F4F48
+=======
+[LOG] SystemI::createSound                     : setdata soundi = 00000000003AF8C8 : node = 0000000031EFD250
+[LOG] SystemI::createSound                     : add node to async list : head = 0000000032843768.  list count = 0
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000000003AF8C8
+[LOG] SystemI::createSoundInternal             :     filename = Assets\Sounds\BrutalCore\Build\Desktop/Master Bank.bank : mode 02010082
+[LOG] SystemI::createSoundInternal             :     exinfo->cbsize             = 232
+[LOG] SystemI::createSoundInternal             :     exinfo->length             = 1597120
+[LOG] SystemI::createSoundInternal             :     exinfo->fileoffset         = 17088
+[LOG] SystemI::createSoundInternal             :     exinfo->numsubsounds       = 1
+[LOG] SystemI::createSoundInternal             :     exinfo->inclusionlist      = 0000000031EFD368
+>>>>>>> Adding music (Heart attack, new fight loop)
 [LOG] SystemI::createSoundInternal             :     exinfo->inclusionlistnum   = 1
 [LOG] SystemI::createSoundInternal             :     exinfo->suggestedsoundtype = 5
 [LOG] SystemI::createSoundInternal             :     exinfo->initialseekpostype = 1
 [LOG] SystemI::createSoundInternal             :     Format has 1 subsounds.
 [LOG] SystemI::createSoundInternal             :     Create as FMOD_CREATESTREAM
 [LOG] System::createSoundInternal              :     decode buffersize = 19200 : blocksize = 256 : format = 2
-[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 731136
+[LOG] SystemI::createSample                    :     mode 02010082 length 19200 samples, lengthbytes 582144
 [LOG] SystemI::createSample                    :     channels = 2
+<<<<<<< HEAD
 [LOG] SystemI::createSample                    :     output = 000000002B411F28
 [LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 731136, channels 2, format 2, freq 48000, mode 0201008a
+=======
+[LOG] SystemI::createSample                    :     output = 0000000031DA3A38
+[LOG] OutputSoftware::createSample             :     lengthpcm 19200, lengthbytes 582144, channels 2, format 2, freq 48000, mode 0201008a
+>>>>>>> Adding music (Heart attack, new fight loop)
 [LOG] System::createSoundInternal              :     1 subsounds detected.
 [LOG] System::createSoundInternal              :     Seek stream to start
 [LOG] System::createSoundInternal              :     flush stream buffer
@@ -82,6 +118,7 @@
 [LOG] System::createSoundInternal              :     switch file handle from small blocking single buffered to large nonblocking doublebuffered.
 [LOG] SystemI::createSoundInternal             :     done.  OpenState now = FMOD_OPENSTATE_READY.
 
+<<<<<<< HEAD
 [LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 000000002534BA38
 [LOG] SoundI::getSubSound                      : sound 000000002534BA38.  Subsound index 0 / 1
 [LOG] SoundI::release                          : MUSIC_InGame_Loop_140bpm4_4 (000000002534BA38)
@@ -94,6 +131,22 @@
 [LOG] SoundI::release                          : release subsounds. (000000000C390608)
 [LOG] SoundI::release                          :     MUSIC_InGame_Intro_140bpm4_4 (000000002B374408)
 [LOG] SoundI::release                          : release codec. (000000000C390608)
+=======
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000000003AF8C8
+[LOG] SoundI::getSubSound                      : sound 00000000003AF8C8.  Subsound index 0 / 1
+[LOG] AsyncThread::threadFunc                  : Starting Asynchronous operation on sound 00000000003AF588
+[LOG] AsyncThread::threadFunc                  : Finished Asynchronous operation on sound 00000000003AF588
+[LOG] SoundI::release                          : MUSIC_InGame_PhaseCoeur_Loop (00000000003AF8C8)
+[LOG] SoundI::release                          : remove stream samples. (00000000003AF8C8)
+[LOG] SoundI::release                          :     MUSIC_InGame_PhaseCoeur_Loop (0000000032509BE8)
+[LOG] SoundI::release                          : release subsounds. (00000000003AF8C8)
+[LOG] SoundI::release                          :     MUSIC_InGame_PhaseCoeur_Loop (00000000003AF588)
+[LOG] SoundI::release                          : release codec. (00000000003AF8C8)
+[LOG] SoundI::release                          :  (0000000031D7BB58)
+[LOG] SoundI::release                          : release subsounds. (0000000031D7BB58)
+[LOG] SoundI::release                          :     SFX_Event_GolemOn (000000003256DB88)
+[LOG] SoundI::release                          : release codec. (0000000031D7BB58)
+>>>>>>> Adding music (Heart attack, new fight loop)
 [LOG] Thread::callback                         : * FMOD Studio update thread finished
 [LOG] Thread::close                            : FMOD Studio update thread thread destroyed
 [LOG] Thread::callback                         : * FMOD Studio bank load thread finished
