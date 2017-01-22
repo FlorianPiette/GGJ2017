@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class MenuScript : MonoBehaviour {
 
     [SerializeField]
-    Image PressAToJoinPlayer1;
+    Text PressAToJoinPlayer1;
     [SerializeField]
-    Image PressAToJoinPlayer2;
+    Text PressAToJoinPlayer2;
 
     [SerializeField]
     Sprite PressAToJoin;
@@ -29,14 +29,14 @@ public class MenuScript : MonoBehaviour {
     {
         if (Input.GetButtonDown("J1Dash"))
         {
-            PlayerOneIsReady = !PlayerOneIsReady;
-            PressAToJoinPlayer1.sprite = PlayerOneIsReady ? Ready : PressAToJoin;
+            PlayerOneIsReady = true;
+            PressAToJoinPlayer1.text = PlayerOneIsReady ? "Ready !" : "Press A to join";
         }
 
         if (Input.GetButtonDown("J2Dash"))
         {
-            PlayerTwoIsReady = !PlayerTwoIsReady;
-            PressAToJoinPlayer2.sprite = PlayerTwoIsReady ? Ready : PressAToJoin;
+            PlayerTwoIsReady = true;
+            PressAToJoinPlayer2.text = PlayerTwoIsReady ? "Ready !" : "Press A to join";
         }
        
         if (PlayerTwoIsReady && PlayerOneIsReady)
