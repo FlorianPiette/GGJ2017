@@ -93,6 +93,12 @@ public class PhaseManager : MonoBehaviour
         isInitiate = true;
     }
 
+    public void BlockPlayerMovement()
+    {
+        Players[0].BlockMovementEnd();
+        Players[1].BlockMovementEnd();
+    }
+
     public void AttributePhase()
     {
         if (Players[0].phase != Phase.None)

@@ -10,6 +10,7 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
+    public bool isEndGame=true;
 	public bool attackLoad;
 	public float TimerLoad;
 	public int looseMana;
@@ -83,19 +84,18 @@ public class PlayerScript : MonoBehaviour
     void FixedUpdate ()
     {
 		_manaCount = manaCount;
-
-		float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
+        float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
  //       print(moveHorizontal + "," + moveVertical);
 
 		Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-		if (!dashOn && !chargeOn && !throwOn && movement != Vector2.zero)
+		if (!dashOn && !chargeOn && !throwOn && movement != Vector2.zero && !isEndGame)
 		{
             if (movementIsLimited)
             {
                 rigidbody.velocity = movement * speed / 8f;
-            } else
+            } else 
             {
                 rigidbody.velocity = movement * speed;
                 animator.Play(playerName + "_Run");
@@ -118,7 +118,7 @@ public class PlayerScript : MonoBehaviour
         );
 
 		//dash
-		if (Input.GetButtonDown(dashInput) && dashOn == false && canDash == true)
+		if (Input.GetButtonDown(dashInput) && dashOn == false && canDash == true && !isEndGame)
 		{
 			currentDashTime = 0.0f;
 			dashOn = true;
@@ -155,7 +155,7 @@ public class PlayerScript : MonoBehaviour
 			canDash = true;
 		}
 
-		if (Input.GetButtonUp(throwInput) && chargeOn && !throwOn)
+		if (Input.GetButtonUp(throwInput) && chargeOn && !throwOn && !isEndGame)
 		{
 			chargeOn = false;
 			throwOn = true;
@@ -187,7 +187,7 @@ public class PlayerScript : MonoBehaviour
             attackLoad = false;
         }
 
-        if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense && manaCount >= 2)
+        if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense && manaCount >= 2 && !isEndGame)
 		{
 			attackLoad = true;
 			looseMana = 2;
@@ -287,5 +287,9 @@ public void LaunchBullet(Vector2 movement, int multiplier)
     public void ReactivateMovement()
     {
         movementIsLimited = false;
+    }
+    public void BlockMovementEnd()
+    {
+        isEndGame = true;
     }
 }
