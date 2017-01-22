@@ -60,8 +60,8 @@
     <object class="MarkerTrack" id="{f9482823-8407-4c4d-bcf3-4d55ff702386}"/>
     <object class="GroupTrack" id="{1147dba7-d3a7-4e54-9349-e4e4494f5625}">
         <relationship name="modules">
-            <destination>{b1f3cfc1-4677-44bd-b4d5-db348ad1421c}</destination>
-            <destination>{1d62d53f-e957-4d6b-adf3-08616299b1b1}</destination>
+            <destination>{6afd5553-1639-490b-8c8c-49604c2fc077}</destination>
+            <destination>{b24173ae-0a47-4be2-917a-17f7b9c05a6d}</destination>
         </relationship>
         <relationship name="mixerGroup">
             <destination>{809c097d-12e6-4ede-9677-f79d824cd407}</destination>
@@ -69,8 +69,8 @@
     </object>
     <object class="Timeline" id="{d87b2454-b80c-4396-801c-d4ed4318eb93}">
         <relationship name="modules">
-            <destination>{b1f3cfc1-4677-44bd-b4d5-db348ad1421c}</destination>
-            <destination>{1d62d53f-e957-4d6b-adf3-08616299b1b1}</destination>
+            <destination>{6afd5553-1639-490b-8c8c-49604c2fc077}</destination>
+            <destination>{b24173ae-0a47-4be2-917a-17f7b9c05a6d}</destination>
         </relationship>
         <relationship name="markers">
             <destination>{779a4801-5dfd-4522-a60a-41a3359b33bd}</destination>
@@ -93,23 +93,23 @@
         </relationship>
     </object>
     <object class="MixerBusPanner" id="{9064fb1c-775d-4fb1-9fe7-50c5d5459248}"/>
-    <object class="SingleSound" id="{b1f3cfc1-4677-44bd-b4d5-db348ad1421c}">
+    <object class="SingleSound" id="{6afd5553-1639-490b-8c8c-49604c2fc077}">
         <property name="start">
             <value>0</value>
         </property>
         <property name="length">
-            <value>5.1428750000000001</value>
+            <value>5.1428958333333332</value>
         </property>
         <relationship name="audioFile">
             <destination>{0acf678c-7e14-4b2f-b426-2f6296c0d59c}</destination>
         </relationship>
     </object>
-    <object class="SingleSound" id="{1d62d53f-e957-4d6b-adf3-08616299b1b1}">
+    <object class="SingleSound" id="{b24173ae-0a47-4be2-917a-17f7b9c05a6d}">
         <property name="start">
-            <value>5.1428750000000001</value>
+            <value>5.1428958333333332</value>
         </property>
         <property name="length">
-            <value>41.142874999999997</value>
+            <value>41.143020833333331</value>
         </property>
         <relationship name="audioFile">
             <destination>{dbdd4129-8fa6-433a-a2ad-d3e23f63444f}</destination>
