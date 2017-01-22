@@ -10,7 +10,7 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
-    public bool isEndGame=true;
+    public bool isEndGame=false;
 	public bool attackLoad;
 	public float TimerLoad;
 	public int looseMana;

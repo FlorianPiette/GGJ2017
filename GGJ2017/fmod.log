@@ -157,3 +157,47 @@
 [LOG] SoundI::release                          :     MUSIC_InGame_Loop_140bpm4_4 (0000000023099E88)
 [LOG] SoundI::release                          : release codec. (0000000023099CE8)
 [LOG] SystemI::mixerSuspend                    : Suspending output.
+[LOG] SystemI::mixerResume                     : Resuming output.
+[LOG] SoundI::release                          : MUSIC_InGame_PhaseCoeur_Loop (00000000230999A8)
+[LOG] SoundI::release                          : remove stream samples. (00000000230999A8)
+[LOG] SoundI::release                          :     MUSIC_InGame_PhaseCoeur_Loop (00000000232FE578)
+[LOG] SoundI::release                          : release subsounds. (00000000230999A8)
+[LOG] SoundI::release                          :     MUSIC_InGame_PhaseCoeur_Loop (0000000023099B48)
+[LOG] SoundI::release                          : release codec. (00000000230999A8)
+[LOG] SoundI::release                          : MUSIC_Menu_Loop_130bpm4_4 (000000002309A1C8)
+[LOG] SoundI::release                          : remove stream samples. (000000002309A1C8)
+[LOG] SoundI::release                          :     MUSIC_Menu_Loop_130bpm4_4 (00000000232FE898)
+[LOG] SoundI::release                          : release subsounds. (000000002309A1C8)
+[LOG] SoundI::release                          :     MUSIC_Menu_Loop_130bpm4_4 (000000002309A028)
+[LOG] SoundI::release                          : release codec. (000000002309A1C8)
+[LOG] SoundI::release                          :  (0000000022ACE458)
+[LOG] SoundI::release                          : release subsounds. (0000000022ACE458)
+[LOG] SoundI::release                          :     MUSIC_InGame_Intro_140bpm4_4 (0000000022AD0168)
+[LOG] SoundI::release                          : release codec. (0000000022ACE458)
+[LOG] Thread::callback                         : * FMOD Studio update thread finished
+[LOG] Thread::close                            : FMOD Studio update thread thread destroyed
+[LOG] Thread::callback                         : * FMOD Studio bank load thread finished
+[LOG] Thread::close                            : FMOD Studio bank load thread thread destroyed
+[LOG] Profile::disconnectAll                   : Profiler disconnecting all clients
+[LOG] Thread::callback                         : * FMOD Studio sample load thread finished
+[LOG] Thread::close                            : FMOD Studio sample load thread thread destroyed
+[LOG] LiveUpdate::release                      : 
+[LOG] LiveUpdate::reset                        : Reset connection (reason Disconnected)
+[LOG] SystemI::close                           : 
+[LOG] SystemI::close                           : Stop all sounds
+[LOG] Thread::callback                         : * FMOD stream thread finished
+[LOG] Thread::close                            : FMOD stream thread thread destroyed
+[LOG] SystemI::close                           : Stream thread destroyed
+[LOG] Thread::callback                         : * FMOD mixer thread finished
+[LOG] Thread::close                            : FMOD mixer thread thread destroyed
+[LOG] SystemI::close                           : Free master channel group.
+[LOG] SystemI::close                           : Remove 'master' sound group.
+[LOG] SystemI::close                           : Free software output.
+[LOG] SystemI::close                           : Free emulated output.
+[LOG] SystemI::close                           : Free channel pool.
+[LOG] Thread::callback                         : * FMOD nonblocking thread (0) finished
+[LOG] Thread::close                            : FMOD nonblocking thread (0) thread destroyed
+[LOG] Thread::callback                         : * FMOD file thread finished
+[LOG] Thread::close                            : FMOD file thread thread destroyed
+[LOG] SystemI::close                           : done.
+
