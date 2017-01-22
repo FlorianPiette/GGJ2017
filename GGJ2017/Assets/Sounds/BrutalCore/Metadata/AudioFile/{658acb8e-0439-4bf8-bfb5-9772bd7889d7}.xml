@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.01.08.00">
-    <object class="AudioFile" id="{6dac480f-2d73-4147-b999-c83148420cfc}">
+    <object class="AudioFile" id="{658acb8e-0439-4bf8-bfb5-9772bd7889d7}">
         <property name="assetPath">
-            <value>SFX_Player_Att_Tir_02.wav</value>
+            <value>SFX_Core_RepopShield.wav</value>
         </property>
         <property name="frequencyInKHz">
             <value>48</value>
@@ -11,7 +11,7 @@
             <value>2</value>
         </property>
         <property name="length">
-            <value>1.8608750000000001</value>
+            <value>0.45902083333333332</value>
         </property>
         <relationship name="masterAssetFolder">
             <destination>{004c82e2-e82f-4ed2-8469-597d9bfb096d}</destination>

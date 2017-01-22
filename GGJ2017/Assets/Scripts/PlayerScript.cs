@@ -54,13 +54,17 @@ public class PlayerScript : MonoBehaviour
     [FMODUnity.EventRef]
     public string golemActivation_sfx = "event:/golemActivation_sfx";
     [FMODUnity.EventRef]
-    public string attack_sfx = "event:/attack_sfx";
+    public string attack_sfxrnd = "event:/attack_sfxrnd";
     [FMODUnity.EventRef]
     public string prepAttack_sfx = "event:/prepAttack_sfx";
     [FMODUnity.EventRef]
     public string dashPlayer_sfx = "event:/dashPlayer_sfx";
     [FMODUnity.EventRef]
     public string StopBallPlayer_sfx = "event:/StopBallPlayer_sfx";
+    [FMODUnity.EventRef]
+    public string immaFiringMyLazer_sfx = "event:/immaFiringMyLazer_sfx";
+    [FMODUnity.EventRef]
+    public string overload_sfx = "event:/overload_sfx";
 
     public float surcharge;
 
@@ -70,6 +74,8 @@ public class PlayerScript : MonoBehaviour
     private GameObject jauge;
     private Vector2 sizeOrigin;
     private Vector2 posOrigin;
+
+    private bool firingLazer = false;
 
     void Awake()
 	{
@@ -169,7 +175,7 @@ public class PlayerScript : MonoBehaviour
 			chargeOn = false;
 			throwOn = true;
 			animator.Play(playerName + "_Throw");
-            FMODUnity.RuntimeManager.PlayOneShot(attack_sfx, Vector3.zero);
+            FMODUnity.RuntimeManager.PlayOneShot(attack_sfxrnd, Vector3.zero);
 
             if (playerId == 2)
                 this.GetComponent<SpriteRenderer>().flipX = false;
@@ -189,7 +195,10 @@ public class PlayerScript : MonoBehaviour
             if (TimerLoad < surcharge)
             {
                 LaunchBullet(movement, multiplier);
-            } 
+            } else
+            {
+                FMODUnity.RuntimeManager.PlayOneShot(overload_sfx, Vector3.zero);
+            }
 
             throwOn = false;
             chargeOn = false;
@@ -270,8 +279,16 @@ public void LaunchBullet(Vector2 movement, int multiplier)
 		Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
 		manaCount -= looseMana;
-	}
 
+        //Imma firing my lazer
+        if (GameObject.FindGameObjectsWithTag("Ball").Length > 12 && !firingLazer)
+        {
+            firingLazer = true;
+            StartCoroutine(refreshFiringLazer());
+            FMODUnity.RuntimeManager.PlayOneShot(immaFiringMyLazer_sfx, Vector3.zero);
+        }
+        
+    }
 
     void IntroSoundPlayer ()
     {
@@ -300,8 +317,15 @@ public void LaunchBullet(Vector2 movement, int multiplier)
     {
         movementIsLimited = false;
     }
+
     public void BlockMovementEnd()
     {
         isEndGame = true;
+    }
+
+    IEnumerator refreshFiringLazer ()
+    {
+        yield return new WaitForSeconds(5f);
+        firingLazer = false;
     }
 }

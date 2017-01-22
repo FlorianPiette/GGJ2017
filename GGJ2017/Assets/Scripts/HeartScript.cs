@@ -21,6 +21,10 @@ public class HeartScript : MonoBehaviour
 
     [FMODUnity.EventRef]
     public string hitCore_sfx = "event:/hitCore_sfx";
+    [FMODUnity.EventRef]
+    public string heartExplode_sfx = "event:/heartExplode_sfx";
+    [FMODUnity.EventRef]
+    public string win_music = "event:/win_music";
 
     public void HeartCollide()
 	{
@@ -48,6 +52,8 @@ public class HeartScript : MonoBehaviour
             endGame = true;
             PhaseManager.Instance.BlockPlayerMovement();
 
+            FMODUnity.RuntimeManager.PlayOneShot(heartExplode_sfx, Vector3.zero);
+
             //Je gère tout ça ici comme un sale parce que PLUS LE TEMPS et nuit blanche o/
             Debug.LogWarning("VICTOIRE !");
             ResultatJ1.enabled = true;
@@ -69,8 +75,15 @@ public class HeartScript : MonoBehaviour
 
     IEnumerator AutoRestart()
     {
-        yield return new WaitForSeconds (10f);
+        yield return new WaitForSeconds(10f);
 
         SceneManager.LoadScene("Menu");
+    }
+    
+    IEnumerator DelayWinMusic()
+    {
+        yield return new WaitForSeconds(6f);
+
+        FMODUnity.RuntimeManager.PlayOneShot(win_music, Vector3.zero);
     }
 }

@@ -15,6 +15,8 @@ public class ShieldScript : MonoBehaviour
     public string hitShield_sfx_02 = "event:/hitShield_sfx_02";
     [FMODUnity.EventRef]
     public string hitShield_sfx_03 = "event:/hitShield_sfx_03";
+    [FMODUnity.EventRef]
+    public string repopShield_sfx = "event:/repopShield_sfx";
 
     public int shieldNumber = 1;
     private string soundToLaunchOnDestroy;
@@ -31,6 +33,7 @@ public class ShieldScript : MonoBehaviour
 
     public void ActivateShield ()
     {
+        FMODUnity.RuntimeManager.PlayOneShot(repopShield_sfx, Vector3.zero);
         this.GetComponent<SpriteRenderer>().enabled = true;
         this.GetComponent<BoxCollider2D>().enabled = true;
     }
