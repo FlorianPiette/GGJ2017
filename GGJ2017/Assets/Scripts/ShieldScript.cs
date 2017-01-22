@@ -11,6 +11,7 @@ public class ShieldScript : MonoBehaviour
 
 	public void ShieldCollide()
 	{
+        Debug.LogError("ggg");
         if (is_first_hit)
         {
             if (gameObject.transform.position.x<=0)

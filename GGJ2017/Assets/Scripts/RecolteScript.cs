@@ -5,6 +5,7 @@ using UnityEngine;
 public class RecolteScript : MonoBehaviour
 {
 	float newManaForPlayer;
+    public int playerId = 1;
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
@@ -13,7 +14,7 @@ public class RecolteScript : MonoBehaviour
 			float playerMana = transform.parent.GetComponent<PlayerScript>().manaCount;
 			newManaForPlayer = other.GetComponent<CollectiblesScript>().GiveMana(playerMana);
 			transform.parent.GetComponent<PlayerScript>().manaCount = newManaForPlayer;
-			other.GetComponent<CollectiblesScript>().Kill();
+			other.GetComponent<CollectiblesScript>().Collect(playerId);
 		}
 	}
 }
