@@ -10,6 +10,8 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
+	public GameObject[] Fxs;
+	[Header("Variables")]
     public bool isEndGame=false;
 	public bool attackLoad;
 	public float TimerLoad;
@@ -123,6 +125,7 @@ public class PlayerScript : MonoBehaviour
 			currentDashTime = 0.0f;
 			dashOn = true;
 			animator.Play(playerName + "_Dash");
+			Fxs[3].SetActive(true);
 			canDash = false;
 			savedMovement = movement;
 		}
@@ -160,6 +163,7 @@ public class PlayerScript : MonoBehaviour
 			chargeOn = false;
 			throwOn = true;
 			animator.Play(playerName + "_Throw");
+			Fxs[1].SetActive(true);
 
             if (playerId == 2)
                 this.GetComponent<SpriteRenderer>().flipX = false;
@@ -271,6 +275,7 @@ public void LaunchBullet(Vector2 movement, int multiplier)
     public void BlockBullet()
     {
 		animator.Play(playerName + "_Guard");
+		Fxs[0].SetActive(true);
 
         movementIsLimited = true;
         //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
