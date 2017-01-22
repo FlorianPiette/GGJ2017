@@ -132,12 +132,12 @@ public class PhaseManager : MonoBehaviour
                 
                 foreach (GameObject mur in mursP1)
                 {
-                    mur.GetComponent<ShieldScript>().ActivateShield();
+                    mur.GetComponent<ShieldScript>().DeactivateShield();
                 }
 
                 foreach (GameObject mur in mursP2)
                 {
-                    mur.GetComponent<ShieldScript>().DeactivateShield();
+                    mur.GetComponent<ShieldScript>().ActivateShield();
                 }
             }
             
