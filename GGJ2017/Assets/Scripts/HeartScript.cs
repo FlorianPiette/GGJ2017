@@ -28,6 +28,9 @@ public class HeartScript : MonoBehaviour
     [FMODUnity.EventRef]
     public string win_music = "event:/win_music";
 
+    //C'est sale :<
+    public GameObject otherHeart;
+
     public void HeartCollide()
 	{
         if (life <= 0)
@@ -58,6 +61,8 @@ public class HeartScript : MonoBehaviour
             PhaseManager.Instance.BlockPlayerMovement();           
 
             FMODUnity.RuntimeManager.PlayOneShot(heartExplode_sfx, Vector3.zero);
+            this.GetComponent<Animator>().SetTrigger("explose");
+
             //Couper la musique 
             musicManager.GetComponent<MusicManager>().StopMusic();
             StartCoroutine(DelayWinMusic());
@@ -82,11 +87,12 @@ public class HeartScript : MonoBehaviour
     
     IEnumerator DelayWinMusic()
     {
-        yield return new WaitForSeconds(4.5f);
+        yield return new WaitForSeconds(3f);
 
+        otherHeart.GetComponent<Animator>().SetTrigger("victoire");
         FMODUnity.RuntimeManager.PlayOneShot(win_music, Vector3.zero);
         
-        yield return new WaitForSeconds(11.5f);
+        yield return new WaitForSeconds(11.077f);
 
         SceneManager.LoadScene("Menu");
     }
