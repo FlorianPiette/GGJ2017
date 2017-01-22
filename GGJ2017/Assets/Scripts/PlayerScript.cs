@@ -58,6 +58,10 @@ public class PlayerScript : MonoBehaviour
 	public float intervalleRecharge;
 	private float timeBeforeRecharging;
 
+    private GameObject jauge;
+    private Vector2 sizeOrigin;
+    private Vector2 posOrigin;
+
     void Awake()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
@@ -70,7 +74,10 @@ public class PlayerScript : MonoBehaviour
 		dashDelay = dashDelayMax;
 		manaCount = manaMax;
 		timeBeforeRecharging = intervalleRecharge;
-        
+
+        jauge = GameObject.Find("jauge" + playerId);
+        sizeOrigin = jauge.GetComponent<RectTransform>().sizeDelta;
+        posOrigin = jauge.transform.position;
     }
 
     void FixedUpdate ()
@@ -218,9 +225,12 @@ public class PlayerScript : MonoBehaviour
                 intervalleRecharge = timeBeforeRecharging;
             }
         }
+
+        jauge.GetComponent<RectTransform>().sizeDelta = new Vector2(manaCount * sizeOrigin.x / manaMax, sizeOrigin.y);
+        jauge.transform.position = new Vector3((transform.position.x < 0 ? posOrigin.x : posOrigin.x + sizeOrigin.x - jauge.GetComponent<RectTransform>().sizeDelta.x), posOrigin.y);
     }
 
-	public void LaunchBullet(Vector2 movement, int multiplier)
+public void LaunchBullet(Vector2 movement, int multiplier)
 	{
 		GameObject balle;
 
