@@ -93,6 +93,12 @@ public class PhaseManager : MonoBehaviour
         isInitiate = true;
     }
 
+    public void BlockPlayerMovement()
+    {
+        Players[0].BlockMovementEnd();
+        Players[1].BlockMovementEnd();
+    }
+
     public void AttributePhase()
     {
         if (Players[0].phase != Phase.None)
@@ -126,12 +132,12 @@ public class PhaseManager : MonoBehaviour
                 
                 foreach (GameObject mur in mursP1)
                 {
-                    mur.GetComponent<ShieldScript>().ActivateShield();
+                    mur.GetComponent<ShieldScript>().DeactivateShield();
                 }
 
                 foreach (GameObject mur in mursP2)
                 {
-                    mur.GetComponent<ShieldScript>().DeactivateShield();
+                    mur.GetComponent<ShieldScript>().ActivateShield();
                 }
             }
             

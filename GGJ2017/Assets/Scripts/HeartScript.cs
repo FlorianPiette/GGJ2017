@@ -41,6 +41,7 @@ public class HeartScript : MonoBehaviour
             life -= damages;
             HPBar.transform.localScale = new Vector3((life / 7f), 1f, 1f);
             endGame = true;
+            PhaseManager.Instance.BlockPlayerMovement();
 
             //Je gère tout ça ici comme un sale parce que PLUS LE TEMPS et nuit blanche o/
             Debug.LogWarning("VICTOIRE !");
