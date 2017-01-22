@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class HeartScript : MonoBehaviour
 {
@@ -14,7 +16,10 @@ public class HeartScript : MonoBehaviour
     [SerializeField]
 	private int damages = 1;
 
-	public void HeartCollide()
+    public Text ResultatJ1;
+    public Text ResultatJ2;
+
+    public void HeartCollide()
 	{
         if (PhaseManager.Instance.startingPhase == true)
         {
@@ -36,7 +41,30 @@ public class HeartScript : MonoBehaviour
             life -= damages;
             HPBar.transform.localScale = new Vector3((life / 7f), 1f, 1f);
             endGame = true;
-            Debug.LogError("VICTOIRE");
+
+            //Je gère tout ça ici comme un sale parce que PLUS LE TEMPS et nuit blanche o/
+            Debug.LogWarning("VICTOIRE !");
+            ResultatJ1.enabled = true;
+            ResultatJ2.enabled = true;
+            StartCoroutine(AutoRestart());
+
+            if (playerID == 1)
+            {
+                ResultatJ1.text = "DÉFAITE :<";
+                ResultatJ2.text = "VICTOIRE !";
+            }
+            else
+            {
+                ResultatJ2.text = "DÉFAITE :<";
+                ResultatJ1.text = "VICTOIRE !";
+            }
 		}
 	}
+
+    IEnumerator AutoRestart()
+    {
+        yield return new WaitForSeconds (10f);
+
+        SceneManager.LoadScene("Menu");
+    }
 }

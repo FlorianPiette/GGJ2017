@@ -231,7 +231,7 @@ public class PlayerScript : MonoBehaviour
         if (!attackLoad && manaCount < manaMax)
         {
             intervalleRecharge -= Time.deltaTime;
-            if (intervalleRecharge <= 0)
+            if (intervalleRecharge <= 0 && phase == PhaseManager.Phase.Offense)
             {
                 manaCount++;
                 intervalleRecharge = timeBeforeRecharging;
@@ -239,7 +239,7 @@ public class PlayerScript : MonoBehaviour
         }
 
         jauge.GetComponent<RectTransform>().sizeDelta = new Vector2(manaCount * sizeOrigin.x / manaMax, sizeOrigin.y);
-        jauge.transform.position = new Vector3((transform.position.x < 0 ? posOrigin.x : posOrigin.x + sizeOrigin.x - jauge.GetComponent<RectTransform>().sizeDelta.x), posOrigin.y);
+        //jauge.transform.position = new Vector3((transform.position.x < 0 ? posOrigin.x : posOrigin.x + sizeOrigin.x - jauge.GetComponent<RectTransform>().sizeDelta.x), posOrigin.y);
     }
 
 public void LaunchBullet(Vector2 movement, int multiplier)

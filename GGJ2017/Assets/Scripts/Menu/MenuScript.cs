@@ -51,7 +51,7 @@ public class MenuScript : MonoBehaviour {
         }
 
         if (CountDown < 1)
-            SceneManager.LoadScene("FloSceneBase");
+            SceneManager.LoadScene("Arena");
     }
 
     /*public void Quit()

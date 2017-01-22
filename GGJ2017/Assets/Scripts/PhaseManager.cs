@@ -65,6 +65,9 @@ public class PhaseManager : MonoBehaviour
             Players[1].phase = Phase.Offense;
             Players[0].phase = Phase.Defense;
 
+            Players[0].manaCount = 0f;
+            Players[1].manaCount = Players[0].manaMax;
+
             foreach (GameObject mur in mursP1)
             {
                 mur.GetComponent<ShieldScript>().ActivateShield();
@@ -77,6 +80,9 @@ public class PhaseManager : MonoBehaviour
             Players[0].phase = Phase.Offense;
             Players[1].phase = Phase.Defense;
 
+            Players[1].manaCount = 0f;
+            Players[0].manaCount = Players[0].manaMax;
+
             foreach (GameObject mur in mursP2)
             {
                 mur.GetComponent<ShieldScript>().ActivateShield();
@@ -88,7 +94,7 @@ public class PhaseManager : MonoBehaviour
     }
 
     public void AttributePhase()
-	{
+    {
         if (Players[0].phase != Phase.None)
 		{
 			if (Players[0].phase == Phase.Offense || Players[0].phase == Phase.HeartAttack)
@@ -98,6 +104,16 @@ public class PhaseManager : MonoBehaviour
 
                 Players[0].manaCount = 0f;
                 Players[1].manaCount = Players[1].manaMax;
+                
+                foreach (GameObject mur in mursP1)
+                {
+                    mur.GetComponent<ShieldScript>().ActivateShield();
+                }
+
+                foreach (GameObject mur in mursP2)
+                {
+                    mur.GetComponent<ShieldScript>().DeactivateShield();
+                }
 
             }
 			else if (Players[1].phase == Phase.Offense || Players[1].phase == Phase.HeartAttack)
@@ -107,8 +123,33 @@ public class PhaseManager : MonoBehaviour
                 
                 Players[1].manaCount = 0f;
                 Players[0].manaCount = Players[0].manaMax;
+                
+                foreach (GameObject mur in mursP1)
+                {
+                    mur.GetComponent<ShieldScript>().ActivateShield();
+                }
+
+                foreach (GameObject mur in mursP2)
+                {
+                    mur.GetComponent<ShieldScript>().DeactivateShield();
+                }
             }
-			ManaSpawners[0].GetComponent<ManaSpawner>().enabled = !ManaSpawners[0].GetComponent<ManaSpawner>().enabled;
+            
+            var children = new List<GameObject>();
+            foreach (Transform child in ManaSpawners[0].transform)
+            {
+                children.Add(child.gameObject);
+            }
+            children.ForEach(child => Destroy(child));
+
+            children = new List<GameObject>();
+            foreach (Transform child in ManaSpawners[1].transform)
+            {
+                children.Add(child.gameObject);
+            }
+            children.ForEach(child => Destroy(child));
+
+            ManaSpawners[0].GetComponent<ManaSpawner>().enabled = !ManaSpawners[0].GetComponent<ManaSpawner>().enabled;
 			ManaSpawners[1].GetComponent<ManaSpawner>().enabled = !ManaSpawners[1].GetComponent<ManaSpawner>().enabled;
 		}
 		else
