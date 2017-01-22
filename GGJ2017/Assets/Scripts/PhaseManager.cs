@@ -30,8 +30,9 @@ public class PhaseManager : MonoBehaviour
 	void Update ()
 	{
 		//Debug 
-		if(Input.GetKeyDown(KeyCode.Return) && DebugIsOn)
+		if (Input.GetKeyDown(KeyCode.P) && DebugIsOn)
 		{
+            Debug.LogError("DEBUG MODE ACTIVATED : invert phase");
 			AttributePhase();
 		}
 	}

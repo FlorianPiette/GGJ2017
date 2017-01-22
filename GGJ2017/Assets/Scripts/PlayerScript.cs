@@ -48,7 +48,7 @@ public class PlayerScript : MonoBehaviour
 	[HideInInspector]
 	public Animator animator;
 
-    private bool movementIsBlocked = false; //During block animation
+    private bool movementIsBlocked = false; //During block animation and throw animation
 
     [FMODUnity.EventRef]
     public string golemActivation = "event:/golemActivation_sfx";
@@ -57,10 +57,6 @@ public class PlayerScript : MonoBehaviour
 
 	public float intervalleRecharge;
 	private float timeBeforeRecharging;
-
-    private GameObject jauge;
-    private Vector2 sizeOrigin;
-    private Vector2 posOrigin;
 
     void Awake()
 	{
@@ -74,10 +70,7 @@ public class PlayerScript : MonoBehaviour
 		dashDelay = dashDelayMax;
 		manaCount = manaMax;
 		timeBeforeRecharging = intervalleRecharge;
-
-        jauge = GameObject.Find("jauge" + playerId);
-        sizeOrigin = jauge.GetComponent<RectTransform>().sizeDelta;
-        posOrigin = jauge.transform.position;
+        
     }
 
     void FixedUpdate ()
@@ -141,21 +134,35 @@ public class PlayerScript : MonoBehaviour
 			dashDelay = dashDelayMax;
 			canDash = true;
 		}
+
 		if (Input.GetButtonUp(throwInput) && chargeOn && !throwOn)
 		{
 			chargeOn = false;
 			throwOn = true;
 			animator.Play(playerName + "_Throw");
-			int multiplier = 1;
+
+            if (playerId == 2)
+                this.GetComponent<SpriteRenderer>().flipX = false;
+            else
+                this.GetComponent<SpriteRenderer>().flipX = true;
+
+            movementIsBlocked = true;
+            //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
+            StopCoroutine("PendingForReactivateMovement");
+            StartCoroutine(PendingForReactivateMovement(1.5f));
+
+            int multiplier = 1;
 			if (TimerLoad > 2.5f)
 				multiplier = 2;
+
+
             if (TimerLoad < surcharge)
             {
                 LaunchBullet(movement, multiplier);
-
             }
 
             TimerLoad = 0;
+
             attackLoad = false;
             manaCount -= looseMana;
         }
@@ -166,11 +173,17 @@ public class PlayerScript : MonoBehaviour
 			looseMana = 2;
 			chargeOn = true;
 			animator.Play(playerName + "_RunBall");
+
+            if (playerId == 2)
+                this.GetComponent<SpriteRenderer>().flipX = false;
+            else
+                this.GetComponent<SpriteRenderer>().flipX = true;
+
             //TODO Stop rechargement
-		}
+        }
 
 
-		if (attackLoad == true) {
+        if (attackLoad == true) {
 			TimerLoad += Time.deltaTime;
 		}
 
@@ -205,8 +218,6 @@ public class PlayerScript : MonoBehaviour
                 intervalleRecharge = timeBeforeRecharging;
             }
         }
-        jauge.GetComponent<RectTransform>().sizeDelta = new Vector2(manaCount * sizeOrigin.x / manaMax, sizeOrigin.y);
-        jauge.transform.position = new Vector3((transform.position.x < 0 ? posOrigin.x : posOrigin.x + sizeOrigin.x - jauge.GetComponent<RectTransform>().sizeDelta.x), posOrigin.y);
     }
 
 	public void LaunchBullet(Vector2 movement, int multiplier)
@@ -216,13 +227,12 @@ public class PlayerScript : MonoBehaviour
 		//print(gameObject.transform.GetChild(0).transform.position);
 		balle = Instantiate(ball);
 		balle.transform.position = gameObject.transform.GetChild(0).transform.position;
-        print(movement);
-		if ((movement.x < 0 && transform.position.x < 0) ||(movement.x > 0 && transform.position.x > 0))
-			balle.GetComponent<BallScript>().setDirection(-movement);
+        if ((movement.x < 0 && transform.position.x < 0) || (movement.x > 0 && transform.position.x > 0))
+            balle.GetComponent<BallScript>().setDirection(-movement);
 		else if (movement.x == 0 && movement.y == 0)
-			balle.GetComponent<BallScript>().setDirection((transform.position.x < 0 ? Vector2.right : Vector2.left));
-		else
-			balle.GetComponent<BallScript>().setDirection(movement);
+            balle.GetComponent<BallScript>().setDirection((transform.position.x < 0 ? Vector2.right : Vector2.left));
+        else
+            balle.GetComponent<BallScript>().setDirection(movement);
 		balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier * 2);
 		Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 		manaCount -= looseMana;
@@ -246,7 +256,7 @@ public class PlayerScript : MonoBehaviour
 
         movementIsBlocked = true;
         //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
-        StopCoroutine("ReactivateMovement");
+        StopCoroutine("PendingForReactivateMovement");
         StartCoroutine(PendingForReactivateMovement(1.5f));
     }
 
