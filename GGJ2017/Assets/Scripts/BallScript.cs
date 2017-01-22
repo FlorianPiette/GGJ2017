@@ -8,7 +8,10 @@ public class BallScript : MonoBehaviour
     private float vitesse;
 	private Collider2D collider;
 
-	void Start()
+    [FMODUnity.EventRef]
+    public string bulletRebond_sfxrnd = "event:/bulletRebond_sfxrnd";
+
+    void Start()
 	{
 		collider = GetComponent<Collider2D>();
 		StartCoroutine("EnabledCollider");
@@ -48,7 +51,9 @@ public class BallScript : MonoBehaviour
 		if (collision.gameObject.name == "up_collider" || collision.gameObject.name == "down_collider")
 		{
 			direction.y *= -1;
-		}
+            FMODUnity.RuntimeManager.PlayOneShot(bulletRebond_sfxrnd, Vector3.zero);
+            
+        }
 		else
 		{
 			//collide avec le reste et la destroy

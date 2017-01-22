@@ -10,6 +10,8 @@ public class Boundary
 
 public class PlayerScript : MonoBehaviour
 {
+	public GameObject[] Fxs;
+	[Header("Variables")]
     public bool isEndGame=false;
 	public bool attackLoad;
 	public float TimerLoad;
@@ -52,7 +54,19 @@ public class PlayerScript : MonoBehaviour
     private bool movementIsLimited = false; //During block animation and throw animation
 
     [FMODUnity.EventRef]
-    public string golemActivation = "event:/golemActivation_sfx";
+    public string golemActivation_sfx = "event:/golemActivation_sfx";
+    [FMODUnity.EventRef]
+    public string attack_sfxrnd = "event:/attack_sfxrnd";
+    [FMODUnity.EventRef]
+    public string prepAttack_sfx = "event:/prepAttack_sfx";
+    [FMODUnity.EventRef]
+    public string dashPlayer_sfx = "event:/dashPlayer_sfx";
+    [FMODUnity.EventRef]
+    public string StopBallPlayer_sfx = "event:/StopBallPlayer_sfx";
+    [FMODUnity.EventRef]
+    public string immaFiringMyLazer_sfx = "event:/immaFiringMyLazer_sfx";
+    [FMODUnity.EventRef]
+    public string overload_sfx = "event:/overload_sfx";
 
     public float surcharge;
 
@@ -62,6 +76,8 @@ public class PlayerScript : MonoBehaviour
     private GameObject jauge;
     private Vector2 sizeOrigin;
     private Vector2 posOrigin;
+
+    private bool firingLazer = false;
 
     void Awake()
 	{
@@ -123,9 +139,11 @@ public class PlayerScript : MonoBehaviour
 			currentDashTime = 0.0f;
 			dashOn = true;
 			animator.Play(playerName + "_Dash");
+			Fxs[3].SetActive(true);
 			canDash = false;
 			savedMovement = movement;
-		}
+            FMODUnity.RuntimeManager.PlayOneShot(dashPlayer_sfx, Vector3.zero);
+        }
 
 		if (currentDashTime < maxDashTime)
 		{
@@ -160,6 +178,8 @@ public class PlayerScript : MonoBehaviour
 			chargeOn = false;
 			throwOn = true;
 			animator.Play(playerName + "_Throw");
+			Fxs[1].SetActive(true);
+            FMODUnity.RuntimeManager.PlayOneShot(attack_sfxrnd, Vector3.zero);
 
             if (playerId == 2)
                 this.GetComponent<SpriteRenderer>().flipX = false;
@@ -179,7 +199,10 @@ public class PlayerScript : MonoBehaviour
             if (TimerLoad < surcharge)
             {
                 LaunchBullet(movement, multiplier);
-            } 
+            } else
+            {
+                FMODUnity.RuntimeManager.PlayOneShot(overload_sfx, Vector3.zero);
+            }
 
             throwOn = false;
             chargeOn = false;
@@ -193,6 +216,7 @@ public class PlayerScript : MonoBehaviour
 			looseMana = 2;
 			chargeOn = true;
 			animator.Play(playerName + "_RunBall");
+            FMODUnity.RuntimeManager.PlayOneShot(prepAttack_sfx, Vector3.zero);
 
             if (playerId == 2)
                 this.GetComponent<SpriteRenderer>().flipX = false;
@@ -259,18 +283,28 @@ public void LaunchBullet(Vector2 movement, int multiplier)
 		Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
 		manaCount -= looseMana;
-	}
 
+        //Imma firing my lazer
+        if (GameObject.FindGameObjectsWithTag("Ball").Length > 12 && !firingLazer)
+        {
+            firingLazer = true;
+            StartCoroutine(refreshFiringLazer());
+            FMODUnity.RuntimeManager.PlayOneShot(immaFiringMyLazer_sfx, Vector3.zero);
+        }
+        
+    }
 
     void IntroSoundPlayer ()
     {
         if (playerId == 1)
-            FMODUnity.RuntimeManager.PlayOneShot(golemActivation, Vector3.zero);
+            FMODUnity.RuntimeManager.PlayOneShot(golemActivation_sfx, Vector3.zero);
     }
     
     public void BlockBullet()
     {
 		animator.Play(playerName + "_Guard");
+		Fxs[0].SetActive(true);
+        FMODUnity.RuntimeManager.PlayOneShot(StopBallPlayer_sfx, Vector3.zero);
 
         movementIsLimited = true;
         //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
@@ -288,8 +322,15 @@ public void LaunchBullet(Vector2 movement, int multiplier)
     {
         movementIsLimited = false;
     }
+
     public void BlockMovementEnd()
     {
         isEndGame = true;
+    }
+
+    IEnumerator refreshFiringLazer ()
+    {
+        yield return new WaitForSeconds(5f);
+        firingLazer = false;
     }
 }
