@@ -19,6 +19,9 @@ public class HeartScript : MonoBehaviour
     public Text ResultatJ1;
     public Text ResultatJ2;
 
+    [FMODUnity.EventRef]
+    public string hitCore_sfx = "event:/hitCore_sfx";
+
     public void HeartCollide()
 	{
         if (PhaseManager.Instance.startingPhase == true)
@@ -30,6 +33,8 @@ public class HeartScript : MonoBehaviour
             else
                 PhaseManager.Instance.InitiateWinner("p0");
         }
+
+        FMODUnity.RuntimeManager.PlayOneShot(hitCore_sfx, Vector3.zero);
 
         if (life > damages)
 		{

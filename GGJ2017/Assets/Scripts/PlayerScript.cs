@@ -52,7 +52,15 @@ public class PlayerScript : MonoBehaviour
     private bool movementIsLimited = false; //During block animation and throw animation
 
     [FMODUnity.EventRef]
-    public string golemActivation = "event:/golemActivation_sfx";
+    public string golemActivation_sfx = "event:/golemActivation_sfx";
+    [FMODUnity.EventRef]
+    public string attack_sfx = "event:/attack_sfx";
+    [FMODUnity.EventRef]
+    public string prepAttack_sfx = "event:/prepAttack_sfx";
+    [FMODUnity.EventRef]
+    public string dashPlayer_sfx = "event:/dashPlayer_sfx";
+    [FMODUnity.EventRef]
+    public string StopBallPlayer_sfx = "event:/StopBallPlayer_sfx";
 
     public float surcharge;
 
@@ -125,7 +133,8 @@ public class PlayerScript : MonoBehaviour
 			animator.Play(playerName + "_Dash");
 			canDash = false;
 			savedMovement = movement;
-		}
+            FMODUnity.RuntimeManager.PlayOneShot(dashPlayer_sfx, Vector3.zero);
+        }
 
 		if (currentDashTime < maxDashTime)
 		{
@@ -160,6 +169,7 @@ public class PlayerScript : MonoBehaviour
 			chargeOn = false;
 			throwOn = true;
 			animator.Play(playerName + "_Throw");
+            FMODUnity.RuntimeManager.PlayOneShot(attack_sfx, Vector3.zero);
 
             if (playerId == 2)
                 this.GetComponent<SpriteRenderer>().flipX = false;
@@ -193,6 +203,7 @@ public class PlayerScript : MonoBehaviour
 			looseMana = 2;
 			chargeOn = true;
 			animator.Play(playerName + "_RunBall");
+            FMODUnity.RuntimeManager.PlayOneShot(prepAttack_sfx, Vector3.zero);
 
             if (playerId == 2)
                 this.GetComponent<SpriteRenderer>().flipX = false;
@@ -265,12 +276,13 @@ public void LaunchBullet(Vector2 movement, int multiplier)
     void IntroSoundPlayer ()
     {
         if (playerId == 1)
-            FMODUnity.RuntimeManager.PlayOneShot(golemActivation, Vector3.zero);
+            FMODUnity.RuntimeManager.PlayOneShot(golemActivation_sfx, Vector3.zero);
     }
     
     public void BlockBullet()
     {
 		animator.Play(playerName + "_Guard");
+        FMODUnity.RuntimeManager.PlayOneShot(StopBallPlayer_sfx, Vector3.zero);
 
         movementIsLimited = true;
         //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
