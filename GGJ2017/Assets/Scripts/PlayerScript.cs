@@ -125,9 +125,15 @@ public class PlayerScript : MonoBehaviour
 			currentDashTime += dashStoppingSpeed;
 			rigidbody.velocity = savedMovement * dashSpeed;
 		}
-		else
+		else if (dashOn)
 		{
-			dashOn = false;
+            //Recup time après un dash
+            movementIsBlocked = true;
+            //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
+            StopCoroutine("PendingForReactivateMovement");
+            StartCoroutine(PendingForReactivateMovement(.5f));
+
+            dashOn = false;
 			//movement = Vector2.zero;
 		}
 
@@ -167,7 +173,7 @@ public class PlayerScript : MonoBehaviour
             {
                 LaunchBullet(movement, multiplier);
             }
-
+            
             TimerLoad = 0;
 
             attackLoad = false;
