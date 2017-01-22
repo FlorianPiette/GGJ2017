@@ -9,11 +9,23 @@ public class ShieldScript : MonoBehaviour
     public bool is_first_hit = true;
     public string winnerIntro;
 
-	public void ShieldCollide()
-	{
-        Debug.LogError("ggg");
-        if (is_first_hit)
+    public void ActivateShield ()
+    {
+        this.GetComponent<SpriteRenderer>().enabled = true;
+        this.GetComponent<BoxCollider2D>().enabled = true;
+    }
+
+    public void DeactivateShield ()
+    {
+        this.GetComponent<SpriteRenderer>().enabled = false;
+        this.GetComponent<BoxCollider2D>().enabled = false;
+    }
+
+    public void ShieldCollide()
+    {
+        /*if (is_first_hit)
         {
+            //Désactiver le Shield. Ce qui est commenté en dessous m'a l'air de changer les phases, sans trop de raison. 
             if (gameObject.transform.position.x<=0)
             {
                 PhaseManager.Instance.InitiateWinner("p0");
@@ -31,7 +43,8 @@ public class ShieldScript : MonoBehaviour
 		    else
 		    {
 			    Destroy(gameObject);
-		    }
-        }
+		    }*/
+        DeactivateShield();
+    
     }
 }

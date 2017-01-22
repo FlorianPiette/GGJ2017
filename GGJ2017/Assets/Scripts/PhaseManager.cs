@@ -6,8 +6,12 @@ public class PhaseManager : MonoBehaviour
 {
 	public static PhaseManager Instance;
     public bool isInitiate = false;
+    public bool startingPhase = false; //La phase pendant laquelle les 2 joueurs sont en défense.
 
-	public enum Phase
+    public GameObject[] mursP1;
+    public GameObject[] mursP2;
+
+    public enum Phase
 	{
 		None,
 		Offense,
@@ -39,23 +43,46 @@ public class PhaseManager : MonoBehaviour
     public void InitiatePhase()
     {
         isInitiate = false;
+        startingPhase = true;
         Players[0].phase = Phase.Offense;
         Players[1].phase = Phase.Offense;
+
+        foreach (GameObject mur in mursP1)
+        {
+            mur.GetComponent<ShieldScript>().DeactivateShield();
+        }
+
+        foreach (GameObject mur in mursP2)
+        {
+            mur.GetComponent<ShieldScript>().DeactivateShield();
+        }
     }
 
     public void InitiateWinner(string winner)
     {
-        
+        Debug.LogError(PhaseManager.Instance.startingPhase);
         if (winner == "p0")
         {
             Players[0].phase = Phase.Offense;
             Players[1].phase = Phase.Defense;
+
+            foreach (GameObject mur in mursP1)//Je ne sais pas pourquoi, il faut activer ces murs-ci
+            {
+                mur.GetComponent<ShieldScript>().ActivateShield();
+            }
+
             ManaSpawners[0].GetComponent<ManaSpawner>().enabled = !ManaSpawners[0].GetComponent<ManaSpawner>().enabled;
         }
         else
         {
             Players[1].phase = Phase.Offense;
             Players[0].phase = Phase.Defense;
+
+            foreach (GameObject mur in mursP2) //Je ne sais pas pourquoi, il faut activer ces murs-ci
+            {
+                mur.GetComponent<ShieldScript>().ActivateShield();
+            }
+
             ManaSpawners[1].GetComponent<ManaSpawner>().enabled = !ManaSpawners[1].GetComponent<ManaSpawner>().enabled;
         }
         isInitiate = true;
