@@ -19,6 +19,8 @@ public class HeartScript : MonoBehaviour
     public Text ResultatJ1;
     public Text ResultatJ2;
 
+    public GameObject musicManager;
+
     [FMODUnity.EventRef]
     public string hitCore_sfx = "event:/hitCore_sfx";
     [FMODUnity.EventRef]
@@ -28,6 +30,9 @@ public class HeartScript : MonoBehaviour
 
     public void HeartCollide()
 	{
+        if (life <= 0)
+            return;
+
         if (PhaseManager.Instance.startingPhase == true)
         {
             PhaseManager.Instance.startingPhase = false;
@@ -50,15 +55,17 @@ public class HeartScript : MonoBehaviour
             life -= damages;
             HPBar.transform.localScale = new Vector3((life / 7f), 1f, 1f);
             endGame = true;
-            PhaseManager.Instance.BlockPlayerMovement();
+            PhaseManager.Instance.BlockPlayerMovement();           
 
             FMODUnity.RuntimeManager.PlayOneShot(heartExplode_sfx, Vector3.zero);
+            //Couper la musique 
+            musicManager.GetComponent<MusicManager>().StopMusic();
+            StartCoroutine(DelayWinMusic());
 
             //Je gère tout ça ici comme un sale parce que PLUS LE TEMPS et nuit blanche o/
             Debug.LogWarning("VICTOIRE !");
             ResultatJ1.enabled = true;
             ResultatJ2.enabled = true;
-            StartCoroutine(AutoRestart());
 
             if (playerID == 1)
             {
@@ -72,18 +79,15 @@ public class HeartScript : MonoBehaviour
             }
 		}
 	}
-
-    IEnumerator AutoRestart()
-    {
-        yield return new WaitForSeconds(10f);
-
-        SceneManager.LoadScene("Menu");
-    }
     
     IEnumerator DelayWinMusic()
     {
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(4.5f);
 
         FMODUnity.RuntimeManager.PlayOneShot(win_music, Vector3.zero);
+        
+        yield return new WaitForSeconds(11.5f);
+
+        SceneManager.LoadScene("Menu");
     }
 }

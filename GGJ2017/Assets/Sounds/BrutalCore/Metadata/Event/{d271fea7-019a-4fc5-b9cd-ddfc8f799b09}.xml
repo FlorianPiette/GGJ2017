@@ -93,13 +93,19 @@
             <value>0</value>
         </property>
         <property name="length">
-            <value>10.285770833333334</value>
+            <value>9.785770833333336</value>
+        </property>
+        <property name="timelockedOffset">
+            <value>0.5</value>
         </property>
         <relationship name="audioFile">
             <destination>{84be09bb-9fdc-4bc8-b482-4fdd7b8a4e9d}</destination>
         </relationship>
     </object>
     <object class="EventMixerGroup" id="{843990bb-9dc0-4fe6-9d8e-d055b2d4f5f8}">
+        <property name="volume">
+            <value>1</value>
+        </property>
         <property name="name">
             <value>Audio 1</value>
         </property>
