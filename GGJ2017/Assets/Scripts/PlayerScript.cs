@@ -255,7 +255,7 @@ public void LaunchBullet(Vector2 movement, int multiplier)
             balle.GetComponent<BallScript>().setDirection((transform.position.x < 0 ? Vector2.right : Vector2.left));
         else
             balle.GetComponent<BallScript>().setDirection(movement);
-		balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier * 2);
+		balle.GetComponent<BallScript>().setVitesse((looseMana == 2 ? 3 : looseMana) * multiplier * 2);
 		Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
 
 		manaCount -= looseMana;
