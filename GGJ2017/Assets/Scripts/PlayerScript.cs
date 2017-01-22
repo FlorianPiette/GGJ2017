@@ -103,7 +103,7 @@ public class PlayerScript : MonoBehaviour
 
 
             //Retourner le personnage
-            if (movement.x > 0f)
+            if ((movement.x >= 0 && transform.position.x < 0) || (movement.x > 0 && transform.position.x > 0))
                 this.GetComponent<SpriteRenderer>().flipX = true;
             else
                 this.GetComponent<SpriteRenderer>().flipX = false;
