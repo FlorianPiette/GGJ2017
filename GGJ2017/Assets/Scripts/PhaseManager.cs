@@ -60,13 +60,12 @@ public class PhaseManager : MonoBehaviour
 
     public void InitiateWinner(string winner)
     {
-        Debug.LogError(PhaseManager.Instance.startingPhase);
-        if (winner == "p0")
+        if (winner == "p1")
         {
-            Players[0].phase = Phase.Offense;
-            Players[1].phase = Phase.Defense;
+            Players[1].phase = Phase.Offense;
+            Players[0].phase = Phase.Defense;
 
-            foreach (GameObject mur in mursP1)//Je ne sais pas pourquoi, il faut activer ces murs-ci
+            foreach (GameObject mur in mursP1)
             {
                 mur.GetComponent<ShieldScript>().ActivateShield();
             }
@@ -75,10 +74,10 @@ public class PhaseManager : MonoBehaviour
         }
         else
         {
-            Players[1].phase = Phase.Offense;
-            Players[0].phase = Phase.Defense;
+            Players[0].phase = Phase.Offense;
+            Players[1].phase = Phase.Defense;
 
-            foreach (GameObject mur in mursP2) //Je ne sais pas pourquoi, il faut activer ces murs-ci
+            foreach (GameObject mur in mursP2)
             {
                 mur.GetComponent<ShieldScript>().ActivateShield();
             }
@@ -96,17 +95,25 @@ public class PhaseManager : MonoBehaviour
 			{
 				Players[0].phase = Phase.Defense;
 				Players[1].phase = Phase.Offense;
-			}
+
+                Players[0].manaCount = 0f;
+                Players[1].manaCount = Players[1].manaMax;
+
+            }
 			else if (Players[1].phase == Phase.Offense || Players[1].phase == Phase.HeartAttack)
 			{
 				Players[0].phase = Phase.Offense;
 				Players[1].phase = Phase.Defense;
-			}
+                
+                Players[1].manaCount = 0f;
+                Players[0].manaCount = Players[0].manaMax;
+            }
 			ManaSpawners[0].GetComponent<ManaSpawner>().enabled = !ManaSpawners[0].GetComponent<ManaSpawner>().enabled;
 			ManaSpawners[1].GetComponent<ManaSpawner>().enabled = !ManaSpawners[1].GetComponent<ManaSpawner>().enabled;
 		}
 		else
 		{
+            Debug.LogError("Should never be triggered; instead use the IniatiatePhase");
 			int rnd = Random.Range(1, 3);
 			if(rnd == 1)
 			{

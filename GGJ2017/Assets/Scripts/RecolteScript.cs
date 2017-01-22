@@ -13,7 +13,11 @@ public class RecolteScript : MonoBehaviour
 		{
 			float playerMana = transform.parent.GetComponent<PlayerScript>().manaCount;
 			newManaForPlayer = other.GetComponent<CollectiblesScript>().GiveMana(playerMana);
+
 			transform.parent.GetComponent<PlayerScript>().manaCount = newManaForPlayer;
+            if (newManaForPlayer > transform.parent.GetComponent<PlayerScript>().manaMax)
+                PhaseManager.Instance.InitiatePhase();
+
 			other.GetComponent<CollectiblesScript>().Collect(playerId);
 		}
 	}

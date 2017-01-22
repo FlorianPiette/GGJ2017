@@ -53,21 +53,24 @@ public class BallScript : MonoBehaviour
 		{
 			//collide avec le reste et la destroy
 			if (collision.gameObject.tag == "Shield")
-			{
-				collision.gameObject.GetComponent<ShieldScript>().ShieldCollide();
+            {
+                ShakeScript.Instance.Shake(ShakeScript.ScreenshakeTypes.Medium);
+                collision.gameObject.GetComponent<ShieldScript>().ShieldCollide();
 			}
 			if (collision.gameObject.tag == "Heart")
 			{
-				collision.gameObject.GetComponent<HeartScript>().HeartCollide();
+                ShakeScript.Instance.Shake(ShakeScript.ScreenshakeTypes.Strong);
+                collision.gameObject.GetComponent<HeartScript>().HeartCollide();
 			}
 			if(collision.gameObject.tag == "Player")
-			{
+            {
+                ShakeScript.Instance.Shake(ShakeScript.ScreenshakeTypes.Weak);
                 collision.gameObject.GetComponent<PlayerScript>().BlockBullet();
 			}
 			if(collision.gameObject.tag == "Ball")
-			{
-				return;
-			}
+            {
+                return;
+            }
 			Destroy(gameObject);
 		}
 	}

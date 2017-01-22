@@ -48,7 +48,7 @@ public class PlayerScript : MonoBehaviour
 	[HideInInspector]
 	public Animator animator;
 
-    private bool movementIsBlocked = false; //During block animation and throw animation
+    private bool movementIsLimited = false; //During block animation and throw animation
 
     [FMODUnity.EventRef]
     public string golemActivation = "event:/golemActivation_sfx";
@@ -90,10 +90,17 @@ public class PlayerScript : MonoBehaviour
 
 		Vector2 movement = new Vector2(moveHorizontal, moveVertical);
 
-		if (!dashOn && !chargeOn && !throwOn && movement != Vector2.zero && !movementIsBlocked)
+		if (!dashOn && !chargeOn && !throwOn && movement != Vector2.zero)
 		{
-			rigidbody.velocity = movement * speed;
-			animator.Play(playerName + "_Run");
+            if (movementIsLimited)
+            {
+                rigidbody.velocity = movement * speed / 8f;
+            } else
+            {
+                rigidbody.velocity = movement * speed;
+                animator.Play(playerName + "_Run");
+            }
+
 
             //Retourner le personnage
             if (movement.x > 0f)
@@ -128,7 +135,7 @@ public class PlayerScript : MonoBehaviour
 		else if (dashOn)
 		{
             //Recup time après un dash
-            movementIsBlocked = true;
+            movementIsLimited = true;
             //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
             StopCoroutine("PendingForReactivateMovement");
             StartCoroutine(PendingForReactivateMovement(.5f));
@@ -159,10 +166,10 @@ public class PlayerScript : MonoBehaviour
             else
                 this.GetComponent<SpriteRenderer>().flipX = true;
 
-            movementIsBlocked = true;
+            movementIsLimited = true;
             //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
             StopCoroutine("PendingForReactivateMovement");
-            StartCoroutine(PendingForReactivateMovement(1.5f));
+            StartCoroutine(PendingForReactivateMovement(1f));
 
             int multiplier = 1;
 			if (TimerLoad > 2.5f)
@@ -172,12 +179,12 @@ public class PlayerScript : MonoBehaviour
             if (TimerLoad < surcharge)
             {
                 LaunchBullet(movement, multiplier);
-            }
-            
-            TimerLoad = 0;
+            } 
 
+            throwOn = false;
+            chargeOn = false;
+            TimerLoad = 0;
             attackLoad = false;
-            manaCount -= looseMana;
         }
 
         if (Input.GetButtonDown(throwInput) && phase != PhaseManager.Phase.Defense && manaCount >= 2)
@@ -191,8 +198,7 @@ public class PlayerScript : MonoBehaviour
                 this.GetComponent<SpriteRenderer>().flipX = false;
             else
                 this.GetComponent<SpriteRenderer>().flipX = true;
-
-            //TODO Stop rechargement
+           
         }
 
 
@@ -251,11 +257,8 @@ public void LaunchBullet(Vector2 movement, int multiplier)
             balle.GetComponent<BallScript>().setDirection(movement);
 		balle.GetComponent<BallScript>().setVitesse(looseMana * multiplier * 2);
 		Physics2D.IgnoreCollision(balle.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+
 		manaCount -= looseMana;
-		throwOn = false;
-		TimerLoad = 0;
-		attackLoad = false;
-		chargeOn = false;
 	}
 
 
@@ -268,9 +271,8 @@ public void LaunchBullet(Vector2 movement, int multiplier)
     public void BlockBullet()
     {
 		animator.Play(playerName + "_Guard");
-        ShakeScript.Instance.Shake(ShakeScript.ScreenshakeTypes.Medium);
 
-        movementIsBlocked = true;
+        movementIsLimited = true;
         //Bloqué jusqu'à la fin de la garde. Au cas où ça buge, on réactive les fonctionnalités via une Coroutine (qui ne sera généralement pas activée).
         StopCoroutine("PendingForReactivateMovement");
         StartCoroutine(PendingForReactivateMovement(1.5f));
@@ -284,6 +286,6 @@ public void LaunchBullet(Vector2 movement, int multiplier)
 
     public void ReactivateMovement()
     {
-        movementIsBlocked = false;
+        movementIsLimited = false;
     }
 }
