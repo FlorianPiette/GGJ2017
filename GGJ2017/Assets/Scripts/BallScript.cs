@@ -6,14 +6,14 @@ public class BallScript : MonoBehaviour
 {
     private Vector2 direction;
     private float vitesse;
-	private Collider2D collider;
+	private Collider2D myCollider;
 
     [FMODUnity.EventRef]
     public string bulletRebond_sfxrnd = "event:/bulletRebond_sfxrnd";
 
     void Start()
 	{
-		collider = GetComponent<Collider2D>();
+		myCollider = GetComponent<Collider2D>();
 		StartCoroutine("EnabledCollider");
 	}
 
@@ -25,7 +25,7 @@ public class BallScript : MonoBehaviour
 			timer -= Time.deltaTime;
 			yield return new WaitForEndOfFrame();
 		}
-		collider.enabled = true;
+		myCollider.enabled = true;
 		yield return null;
 	}
 

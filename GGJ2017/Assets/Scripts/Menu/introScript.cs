@@ -3,32 +3,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class introScript : MonoBehaviour {
+public class introScript : MonoBehaviour
+{
+	[SerializeField]
+	public GameObject Titre;
+	[SerializeField]
+	public GameObject Commandes;
+	[SerializeField]
+	public GameObject Regles;
+	[SerializeField]
+	public GameObject Pass;
 
     bool titre = true;
     bool commandes = true;
     bool regles = true;
-
-    // Use this for initialization
-    void Start () {
-		
-	}
+	bool menuManagerIsOn = false;
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
         if (Input.GetButtonDown("J1Dash") && titre)
         {
-            gameObject.transform.GetChild(3).gameObject.SetActive(false);
+			Titre.SetActive(false);
             titre = false;
         }
         else if (Input.GetButtonDown("J1Dash") && commandes)
         {
-            gameObject.transform.GetChild(2).gameObject.SetActive(false);
+			Commandes.SetActive(false);
             commandes = false;
         }
         else if (Input.GetButtonDown("J1Dash") && regles)
         {
-            gameObject.transform.GetChild(1).gameObject.SetActive(false);
+			Regles.SetActive(false);
             regles = false;
         }
         else if (Input.GetButtonDown("J1Action"))
@@ -37,10 +42,16 @@ public class introScript : MonoBehaviour {
             commandes = false;
             regles = false;
         }
-        if (!titre && !commandes && !regles)
+		if (!titre && !commandes && !regles && !menuManagerIsOn)
         {
-            gameObject.transform.GetChild(4).gameObject.SetActive(false);
-            SceneManager.LoadScene("Menu");
+			Pass.SetActive(false);
+			menuManagerIsOn = true;
+            //SceneManager.LoadScene("Menu");
         }
+		if(menuManagerIsOn)
+		{
+			gameObject.GetComponent<MenuScript>().enabled = true;
+			gameObject.GetComponent<introScript>().enabled = false;
+		}
     }
 }

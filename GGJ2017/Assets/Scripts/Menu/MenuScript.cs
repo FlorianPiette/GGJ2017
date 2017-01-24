@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MenuScript : MonoBehaviour {
-
+public class MenuScript : MonoBehaviour
+{
     [SerializeField]
     Text PressAToJoinPlayer1;
     [SerializeField]

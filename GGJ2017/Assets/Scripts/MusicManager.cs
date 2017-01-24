@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MusicManager : MonoBehaviour {
+public class MusicManager : MonoBehaviour
+{
+	public static MusicManager Instance;
 
     [FMODUnity.EventRef]
     public string heartFight = "event:/heartFight_music";
@@ -17,9 +19,14 @@ public class MusicManager : MonoBehaviour {
 
     public bool debugModeActivated = false;
 
-    // Use this for initialization
-    void Start () {
+    
+	void Awake()
+	{
+		Instance = this;
+	}
 
+    void Start ()
+	{
         fight_musicInstance = FMODUnity.RuntimeManager.CreateInstance(fight_music);
         fight_musicInstance.start();
 
@@ -34,8 +41,8 @@ public class MusicManager : MonoBehaviour {
     }
 
 	// Update is called once per frame
-	void Update () {
-
+	void Update ()
+	{
         if (debugModeActivated)
         {
             //Debug

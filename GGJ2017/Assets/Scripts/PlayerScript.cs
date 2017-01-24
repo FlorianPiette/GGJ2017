@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class Boundary
@@ -17,7 +18,6 @@ public class PlayerScript : MonoBehaviour
 	public float TimerLoad;
 	public int looseMana;
 
-	private float _manaCount;
 	public float manaMax;
 	public float manaCount;
 	[SerializeField]
@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour
     //public float tilt;
 	[SerializeField]
     private Boundary boundary;
-	private new Rigidbody2D rigidbody;
+	private Rigidbody2D myRigidbody;
 	private Vector2 savedMovement;
 
 	private string playerName;
@@ -73,15 +73,13 @@ public class PlayerScript : MonoBehaviour
 	public float intervalleRecharge;
 	private float timeBeforeRecharging;
 
-    private GameObject jauge;
-    private Vector2 sizeOrigin;
-    private Vector2 posOrigin;
+    private GameObject manaJauge;
 
     private bool firingLazer = false;
 
-    void Awake()
+    void Start()
 	{
-		rigidbody = GetComponent<Rigidbody2D>();
+		myRigidbody = GetComponent<Rigidbody2D>();
 		animator = GetComponent<Animator>();
 		playerName = transform.name;
 
@@ -92,14 +90,20 @@ public class PlayerScript : MonoBehaviour
 		manaCount = manaMax;
 		timeBeforeRecharging = intervalleRecharge;
 
-        jauge = GameObject.Find("jauge" + playerId);
-        sizeOrigin = jauge.GetComponent<RectTransform>().sizeDelta;
-        posOrigin = jauge.transform.position;
+		switch(playerId)
+		{
+			case 1:
+				manaJauge = UIManager.Instance.ManaJauge_J1;
+				break;
+			case 2:
+				manaJauge = UIManager.Instance.ManaJauge_J2;
+				break;
+		}
+			
     }
 
     void FixedUpdate ()
     {
-		_manaCount = manaCount;
         float moveHorizontal = Input.GetAxis("J" + playerId + "Horizontal");
 		float moveVertical = Input.GetAxis("J" + playerId + "Vertical");
  //       print(moveHorizontal + "," + moveVertical);
@@ -110,10 +114,10 @@ public class PlayerScript : MonoBehaviour
 		{
             if (movementIsLimited)
             {
-                rigidbody.velocity = movement * speed / 8f;
+				myRigidbody.velocity = movement * speed / 8f;
             } else 
             {
-                rigidbody.velocity = movement * speed;
+				myRigidbody.velocity = movement * speed;
                 animator.Play(playerName + "_Run");
             }
 
@@ -125,12 +129,12 @@ public class PlayerScript : MonoBehaviour
                 this.GetComponent<SpriteRenderer>().flipX = false;
         }
 		else
-			rigidbody.velocity = Vector2.zero;
+			myRigidbody.velocity = Vector2.zero;
 
-        rigidbody.position = new Vector2 
+		myRigidbody.position = new Vector2 
         (
-            Mathf.Clamp (rigidbody.position.x, boundary.xMin, boundary.xMax), 
-            Mathf.Clamp (rigidbody.position.y, boundary.yMin, boundary.yMax)
+			Mathf.Clamp(myRigidbody.position.x, boundary.xMin, boundary.xMax),
+			Mathf.Clamp(myRigidbody.position.y, boundary.yMin, boundary.yMax)
         );
 
 		//dash
@@ -148,7 +152,7 @@ public class PlayerScript : MonoBehaviour
 		if (currentDashTime < maxDashTime)
 		{
 			currentDashTime += dashStoppingSpeed;
-			rigidbody.velocity = savedMovement * dashSpeed;
+			myRigidbody.velocity = savedMovement * dashSpeed;
 		}
 		else if (dashOn)
 		{
@@ -261,9 +265,7 @@ public class PlayerScript : MonoBehaviour
                 intervalleRecharge = timeBeforeRecharging;
             }
         }
-
-        jauge.GetComponent<RectTransform>().sizeDelta = new Vector2(manaCount * sizeOrigin.x / manaMax, sizeOrigin.y);
-        //jauge.transform.position = new Vector3((transform.position.x < 0 ? posOrigin.x : posOrigin.x + sizeOrigin.x - jauge.GetComponent<RectTransform>().sizeDelta.x), posOrigin.y);
+		manaJauge.GetComponent<Image>().fillAmount = manaCount / manaMax;
     }
 
 public void LaunchBullet(Vector2 movement, int multiplier)

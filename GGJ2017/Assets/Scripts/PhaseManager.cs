@@ -5,11 +5,6 @@ using UnityEngine;
 public class PhaseManager : MonoBehaviour
 {
 	public static PhaseManager Instance;
-    public bool isInitiate = false;
-    public bool startingPhase = false; //La phase pendant laquelle les 2 joueurs sont en défense.
-
-    public GameObject[] mursP1;
-    public GameObject[] mursP2;
 
     public enum Phase
 	{
@@ -19,8 +14,14 @@ public class PhaseManager : MonoBehaviour
 		HeartAttack
 	}
 
+    public GameObject[] mursP1;
+    public GameObject[] mursP2;
+
 	public PlayerScript[] Players;
 	public ManaSpawner[] ManaSpawners;
+    public bool isInitiate = false;
+    public bool startingPhase = false; //La phase pendant laquelle les 2 joueurs sont en défense.
+
 	public float manaMaxLimitToSwitch = 100;
 
     public bool DebugIsOn = false;
@@ -175,6 +176,5 @@ public class PhaseManager : MonoBehaviour
 				ManaSpawners[0].GetComponent<ManaSpawner>().enabled = true;
 			}
 		}
-		
 	}
 }

@@ -4,16 +4,9 @@ using UnityEngine;
 
 public class CollectiblesScript : MonoBehaviour
 {
-	public float manaPoints = 10.0f;
     public Vector3 player1ManaPos;
     public Vector3 player2ManaPos;
     public float speed = 1;
-
-    /*public float GiveMana(float playerMana)
-	{
-		float amountOfMana = playerMana + manaPoints;
-		return amountOfMana;
-	}*/
 
 	public void Collect(int playerId)
 	{

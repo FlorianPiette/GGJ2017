@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RecolteScript : MonoBehaviour
 {
-	//float newManaForPlayer;
     public int playerId = 1;
 
     [FMODUnity.EventRef]
@@ -14,13 +13,10 @@ public class RecolteScript : MonoBehaviour
 	{
 		if (other.tag == "Collectibles")
 		{
-            //float playerMana = transform.parent.GetComponent<PlayerScript>().manaCount;
-            //newManaForPlayer = other.GetComponent<CollectiblesScript>().GiveMana(playerMana);
-
             FMODUnity.RuntimeManager.PlayOneShot(collectMana_sfxrnd, Vector3.zero);
 
             transform.parent.GetComponent<PlayerScript>().manaCount += 10f;
-            if (transform.parent.GetComponent<PlayerScript>().manaCount > transform.parent.GetComponent<PlayerScript>().manaMax)
+            if (transform.parent.GetComponent<PlayerScript>().manaCount >= transform.parent.GetComponent<PlayerScript>().manaMax)
                 PhaseManager.Instance.AttributePhase();
 
 			other.GetComponent<CollectiblesScript>().Collect(playerId);
