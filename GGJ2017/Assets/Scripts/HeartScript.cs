@@ -97,7 +97,7 @@ public class HeartScript : MonoBehaviour
         otherHeart.GetComponent<Animator>().SetTrigger("victoire");
         FMODUnity.RuntimeManager.PlayOneShot(win_music, Vector3.zero);
         
-        yield return new WaitForSeconds(11.077f);
+        yield return new WaitForSeconds(10.99f);
 
         SceneManager.LoadScene("Menu");
     }

@@ -36,12 +36,12 @@ public class introScript : MonoBehaviour
 			Regles.SetActive(false);
             regles = false;
         }
-        else if (Input.GetButtonDown("J1Action"))
+        /*else if (Input.GetButtonDown("J1Action"))
         {
             titre = false;
             commandes = false;
             regles = false;
-        }
+        }*/
 		if (!titre && !commandes && !regles && !menuManagerIsOn)
         {
 			Pass.SetActive(false);
